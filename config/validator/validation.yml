@@ -1,0 +1,13 @@
+# config/validator/validation.yaml
+App\Entity\Tickets:
+    properties:
+        DesiredDate:
+            - GreaterThanOrEqual: today
+    constraints:
+        - Callback: checkHalfDay
+        - Callback: isSunday
+        - Callback: isFeastDay
+
+
+
+

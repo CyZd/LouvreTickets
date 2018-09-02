@@ -1,0 +1,42 @@
+index:
+    path: /
+    controller: App\Controller\PagesController::index
+    requirements:
+        _locale: en|fr
+
+
+payment_made:
+    path: 
+        /payment_accepted/{slug}
+    controller: App\Controller\PagesController::paymentMade
+    requirements:
+        slug: '\d+'
+
+
+payment_fail:
+    path: 
+        /payment_fail/{slug}
+    controller: App\Controller\PagesController::paymentFail
+    requirements:
+        slug: '\d+'
+
+addticket_test:
+    path:
+        /addticket_test/
+    controller: App\Controller\PagesController::addTicketTest
+
+formTest:
+    path:
+        /formtest/
+    controller: App\Controller\PagesController::formBuildTest
+
+payment_list:
+    path:
+        /payment_list/
+    controller: App\Controller\PagesController::paymentList
+
+
+
+
+
+
