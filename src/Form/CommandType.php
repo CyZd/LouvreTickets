@@ -8,6 +8,8 @@ use App\Form\TicketType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Validator\Constraints\Valid;
 
 class CommandType extends AbstractType
 {
@@ -15,11 +17,13 @@ class CommandType extends AbstractType
     {
 
         $builder->add('ticketsOrdered', CollectionType::class, array(
+            'constraints'=>array(new Valid),
             'entry_type' =>TicketType::class,
             'allow_add'=>true,
             'allow_delete'=>true,
             'entry_options' => array('label' => false),
-        ));
+        ))
+        ->add('VisitorEmail', EmailType::class);
         
 
     }

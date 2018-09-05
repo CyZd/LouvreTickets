@@ -3,10 +3,14 @@ App\Entity\Tickets:
     properties:
         DesiredDate:
             - GreaterThanOrEqual: today
+            
+
     constraints:
         - Callback: checkHalfDay
         - Callback: isSunday
         - Callback: isFeastDay
+        - App\Validator\Constraints\AllTicketsSold: ~
+
 
 
 

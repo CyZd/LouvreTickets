@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommandRepository")
  */
@@ -27,6 +28,11 @@ class Command
      * @ORM\OneToMany(targetEntity="App\Entity\Tickets", mappedBy="Command")
      */
     private $ticketsOrdered;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $VisitorEmail;
 
     public function __construct()
     {
@@ -77,6 +83,18 @@ class Command
                 $ticketsOrdered->setCommand(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVisitorEmail(): ?string
+    {
+        return $this->VisitorEmail;
+    }
+
+    public function setVisitorEmail(string $VisitorEmail): self
+    {
+        $this->VisitorEmail = $VisitorEmail;
 
         return $this;
     }

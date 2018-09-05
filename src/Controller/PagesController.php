@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\TicketType;
 use App\Form\CommandType;
 
+
 use Twig\Environment;
 
 
@@ -63,7 +64,7 @@ class PagesController extends Controller
         //$form=$this->createForm(TicketType::class,$ticket);
         
 
-        //$order->addTicketsOrdered($ticket);
+        $order->addTicketsOrdered($ticket);
         $order->setName('test');
 
         $form=$this->createForm(CommandType::class,$order);
@@ -82,6 +83,18 @@ class PagesController extends Controller
             
             $ticket->setPriceTag($price);
 
+            //test
+            // $desiredDate=$ticket->getDesiredDate();
+            // $entityManager=$this->getDoctrine()->getManager()->getRepository(Tickets::class);
+
+            // $date=$entityManager->findAllForOneDate($desiredDate);
+            // if(array_count_values($date)>= 1000)
+            // {
+            //     throw new \RuntimeException("Plus de billets!!!");
+            // }
+
+            //fin test
+
             
             $entityManager=$this->getDoctrine()->getManager();
             
@@ -96,6 +109,7 @@ class PagesController extends Controller
             $ticketsRepo=$entityManager->getRepository(Tickets::class);
             $ticketList=$ticketsRepo->findAll();
 
+            $this->sendMailTickets($order, $ticket);
             return new Response($twig->render('paymentList.html.twig', array('ticketList'=>$ticketList)));
             }
         }
@@ -145,6 +159,32 @@ class PagesController extends Controller
             }
         }
     }
+
+    public function sendMailTickets(Command $command, Tickets $ticket)
+    {
+
+        $mailDestination=$command->getVisitorEmail();
+
+        $message=(new \Swift_Message('Musée du louvre: votre commande est arrivée'))
+        ->setFrom('louvre-musee-reservation@louvre.gouv.fr')
+        ->setTo($mailDestination)
+        ->setBody(
+            $this->renderView(
+                'emails/registration.html.twig',
+                array(
+                    'ticket'=>$ticket,
+                    'command'=>$command,
+                )
+            ),
+            'text/html'
+        );
+
+
+        $this->get('mailer')->send($message);
+        
+    }
+
+    
 
 
 }

@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Yasumi\Yasumi;
 
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TicketsRepository")
  */
@@ -15,6 +14,7 @@ class Tickets
     public function __construct()
     {
         $this->date=new \DateTime();
+
     }
     
     /**
@@ -74,9 +74,6 @@ class Tickets
      * @ORM\JoinColumn(nullable=false)
      */
     private $Command;
-
-
-
 
 
     public function getId(): ?int
@@ -206,6 +203,8 @@ class Tickets
         return $this;
     }
 
+    
+
     public function checkHalfDay(ExecutionContextInterface $context)
     {
         $givenDate=$this->getDayType();
@@ -247,6 +246,8 @@ class Tickets
         }
     }
 
+
+
     public function getCommand(): ?Command
     {
         return $this->Command;
@@ -258,6 +259,7 @@ class Tickets
 
         return $this;
     }
+
 
 
 
