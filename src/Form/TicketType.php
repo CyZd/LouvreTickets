@@ -28,31 +28,41 @@ class TicketType extends AbstractType
         $builder
             ->add('VisitorName', TextType::class, array(
                 'constraints' => new NotBlank(),
+                'label' => 'Prénom'
             ))
             ->add('VisitorSurName', TextType::class, array(
                 'constraints' => new NotBlank(),
+                'label'=> 'Nom'
             ))
-            ->add('VisitorCountry', CountryType::class)
+            ->add('VisitorCountry', CountryType::class, array(
+                'label'=> 'Pays d\'origine'
+            ))
             ->add('DesiredDate', DateType::class, array(
-                'constraints' => new GreaterThanOrEqual(array(
+                    'constraints' => new GreaterThanOrEqual(array(
                     'value'=>'today',
                     'message'=>'Vous ne pouvez pas commander pour une date passée.',
                     )),
                 'format' => 'ddMMMMyyyy',
+                'label' =>'Date de visite souhaitée'
             ))
             ->add('DayType', ChoiceType::class, [
                 'choices'=> array(
                     'Journée pleine' => 1,
                     'Demie-journée' => 0,
-                )
+                ),
+                'label'=>'Durée de la visite'
             ])
             ->add('VisitorDoB', BirthdayType::class, array(
                 'format'=> 'ddMMMMyyyy',
+                'label'=> 'Date de naissance'
             ))
             ->add('ReducedPrice', CheckboxType::class, array(
                 'required'=>false,
-            ))
-            ->add('Save', SubmitType::class);
+                'label'=>'Je dispose d\'un tarif réduit'
+            ));
+            // ->add('Save', SubmitType::class, array(
+            //     'label'=>'Commander'
+            // ));
 
     }
 

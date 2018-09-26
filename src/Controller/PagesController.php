@@ -9,7 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\TicketType;
 use App\Form\CommandType;
+use Stripe\Stripe;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 use Twig\Environment;
 
@@ -19,53 +24,30 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class PagesController extends Controller
 {
     
-    public function index(Environment $twig)
+    public function index(Environment $twig, SessionInterface $session)
     {
+        $session = new Session(new NativeSessionStorage(), new AttributeBag());
+        $session->set('orderToken', '');
         return new Response($twig->render('firstTest.html.twig'));
     }
 
-    public function addTicketTest(Environment $twig)
+
+
+    public function formBuildTest(Request $request, Environment $twig, SessionInterface $session)
     {
-        // $priceTag=$this->getDoctrine()->getManager()->getRepository(Categories::class)->findOneBy(array('Tarif' => 'normal'));
-
-
-
-        // $tickTest=new Tickets;
-        // $tickTest->setDate(New \DateTime('now'));
-        // $tickTest->setDayType("1");
-        // $tickTest->setPriceTag($priceTag->getPricing());
-        // $tickTest->setVisitorName("Grobert");
-        // $tickTest->setVisitorSurName("Bouligneux");
-        // $tickTest->setByerNumber("1");
-        // $tickTest->setBatchNumber("1");
-
-        // $entityManager=$this->getDoctrine()->getManager();
-        // $entityManager->persist($tickTest);
-        // $entityManager->persist($priceTag);
-        // $entityManager->flush();
-
-        // $ticketsRepo=$entityManager->getRepository(Tickets::class);
-        // $ticketList=$ticketsRepo->findAll();
-
-        return new Response($twig->render('paymentList.html.twig', array('ticketList'=>$ticketList)));
-    }
-
-    public function formBuildTest(Request $request, Environment $twig)
-    {
-
+        
         $ticket=new Tickets;
         $order=new Command;
 
         $ticket->setDate(New \DateTime('now'));
-
-        //$form=$this->createForm(TicketType::class,$ticket);
         
 
         $order->addTicketsOrdered($ticket);
-        $order->setName('test');
+        $order->setName($this->randCommandName());
 
         $form=$this->createForm(CommandType::class,$order);
 
@@ -74,59 +56,104 @@ class PagesController extends Controller
         {
             $form->handleRequest($request);
 
+
             if ($form->isSubmitted() && $form->isValid())
             {
-            $purchaseStart=$form->getData();
-            
-            $ageValue=$ticket->getVisitorDoB()->format('Y');
-            $price=$this->checkPrices($ageValue, $ticket);
-            
-            $ticket->setPriceTag($price);
 
-            //test
-            // $desiredDate=$ticket->getDesiredDate();
-            // $entityManager=$this->getDoctrine()->getManager()->getRepository(Tickets::class);
+                $purchaseStart=$form->getData();
+                
+                $entityManager=$this->getDoctrine()->getManager();
 
-            // $date=$entityManager->findAllForOneDate($desiredDate);
-            // if(array_count_values($date)>= 1000)
-            // {
-            //     throw new \RuntimeException("Plus de billets!!!");
-            // }
+                $list=$order->getTicketsOrdered();
 
-            //fin test
+                foreach($list as $element)
+                {
+                    $ageValue=$element->getVisitorDoB()->format('Y');
+                    $price=$this->checkPrices($ageValue, $element);
+                
+                    $element->setPriceTag($price);
+                    $entityManager->persist($element);
+                }
 
-            
-            $entityManager=$this->getDoctrine()->getManager();
-            
-            $entityManager->persist($order);
-            $entityManager->persist($ticket);
-            
+                $entityManager->persist($order);
+                $entityManager->flush();
 
-            
-            $entityManager->flush();
+                $orderId=$order->getId();
+                $session->set('orderToken',$orderId);
 
 
-            $ticketsRepo=$entityManager->getRepository(Tickets::class);
-            $ticketList=$ticketsRepo->findAll();
+                // $ticketsRepo=$entityManager->getRepository(Tickets::class);
+                // $ticketList=$ticketsRepo->findAll();
 
-            $this->sendMailTickets($order, $ticket);
-            return new Response($twig->render('paymentList.html.twig', array('ticketList'=>$ticketList)));
+                // $this->sendPayment($order);
+                // $this->sendMailTickets($order, $ticket)
+
+                return $this->forward('App\Controller\PagesController::recapOrder');
             }
         }
         return $this->render('formTest.html.twig', array('form'=>$form->createView()));
-        
+
+    }
+
+    public function recapOrder(Request $request, Environment $twig, SessionInterface $session)
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $orderRepo=$entityManager->getRepository(Command::class);
+        $orderId=$session->get('orderToken');
+
+        $currentOrder=$orderRepo->find($orderId);
+
+        $list=$currentOrder->getTicketsOrdered();
+
+        return $this->render('orderRecap.html.twig', array('ticket'=>$list));
+
     }
  
-    public function paymentMade(Environment $twig, $slug)
-    {   
-        return new Response($twig->render('paymentMade.html.twig', array('slug'=>$slug)));
+
+    public function executePayment(Request $request, Environment $twig, SessionInterface $session)
+    {
+        $entityManager=$this->getDoctrine()->getManager();
+        $orderRepo=$entityManager->getRepository(Command::class);
+        $orderId=$session->get('orderToken');
+        if($orderId==null)
+        {
+            throw $this->createNotFoundException('La page que vous cherchez n\'existe pas.');
+        }
+
+        $currentOrder=$orderRepo->find($orderId);
+
+        $list=$currentOrder->getTicketsOrdered();
+
+        $totalPrice=0;
+            foreach($list as $element)
+            {
+                $totalPrice+=$element->getPriceTag();
+            }
+        
+        $this->sendPayment($totalPrice);
+        
+        if($this->sendPayment($totalPrice)){
+            $this->sendMailTickets($currentOrder, $list);
+            return $this->render('paymentMade.html.twig', array('order'=>$currentOrder, 'ticket'=>$list));
+        }else{
+            $entityManager=$this->getDoctrine()->getManager();
+            $orderRepo=$entityManager->getRepository(Command::class);
+            $ticketSRepo=$entityManager->getRepository(Tickets::class);
+            $orderId=$session->get('orderToken');
+
+            $currentOrder=$orderRepo->find($orderId);
+
+            
+            $tickets=$entityManager->findBy(array('commandId'=>$currentOrder->getId()));
+
+            $entityManager->remove($currentOrder);
+            $entityManager->remove($tickets);
+
+            return $this->render('paymentFail.html.twig');   
+        }     
     }
 
     
-    public function paymentFail(Environment $twig, $slug)
-    {
-        return new Response($twig->render('paymentFail.html.twig', array('slug'=>$slug)));
-    }
 
     public function paymentList(Environment $twig)
     {
@@ -136,6 +163,8 @@ class PagesController extends Controller
         return new Response($twig->render('paymentList.html.twig', array('ticketList'=>$ticketList)));
     }
 
+
+//secondary functions
     public function checkPrices(int $value, $ticket): float
     {
         
@@ -160,7 +189,7 @@ class PagesController extends Controller
         }
     }
 
-    public function sendMailTickets(Command $command, Tickets $ticket)
+    public function sendMailTickets(Command $command, $ticket)
     {
 
         $mailDestination=$command->getVisitorEmail();
@@ -179,12 +208,33 @@ class PagesController extends Controller
             'text/html'
         );
 
-
         $this->get('mailer')->send($message);
         
     }
 
-    
+    public function randCommandName()
+    {
+        return uniqid(rand());
+    }
+
+
+    public function sendPayment($totalPrice)
+    {
+        \Stripe\Stripe::setApiKey("sk_test_UyY88AsxgBLXgp0sWFsZm8gn");
+
+        try{
+            $charge=\Stripe\Charge::create([
+            'amount'=> $totalPrice*100,
+            'currency'=>'eur',
+            'source'=>'tok_visa'
+            ]);
+            return True;
+        } 
+        catch(\Stripe\Error\Card $e)
+        {
+            return False;
+        }
+    }
 
 
 }

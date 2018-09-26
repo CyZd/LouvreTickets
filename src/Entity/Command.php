@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 
+
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommandRepository")
  */
@@ -25,7 +27,7 @@ class Command
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tickets", mappedBy="Command")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tickets", mappedBy="Command", cascade={"persist"})
      */
     private $ticketsOrdered;
 
@@ -33,6 +35,8 @@ class Command
      * @ORM\Column(type="string", length=255)
      */
     private $VisitorEmail;
+
+    private $resolver;
 
     public function __construct()
     {
@@ -98,4 +102,5 @@ class Command
 
         return $this;
     }
+
 }

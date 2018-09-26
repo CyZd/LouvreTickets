@@ -33,6 +33,17 @@ class TicketsRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findAssociatedOrder($id)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.commandId = :Id')
+            ->setParameter('Id', $id)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Tickets
     {

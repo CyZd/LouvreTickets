@@ -1,3 +1,36 @@
 body {
-    background-color: lightgray;
+    padding-top: 65px;
+}
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#command{
+    padding-top: 35px;
+}
+
+.collapsible{
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+
+.collcontent {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
 }

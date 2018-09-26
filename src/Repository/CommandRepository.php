@@ -19,22 +19,21 @@ class CommandRepository extends ServiceEntityRepository
         parent::__construct($registry, Command::class);
     }
 
-//    /**
-//     * @return Command[] Returns an array of Command objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Command[] Returns an array of Command objects
+    */
+    //remplace name par une recherche via l'id!!!
+    public function findAllByCommandName($value)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+        $qb= $this->createQueryBuilder('c')
+            ->andWhere('c.name = :name')
+            ->setParameter('name', $value)
             ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Command

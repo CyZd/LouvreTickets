@@ -13,7 +13,7 @@ class Tickets
 {
     public function __construct()
     {
-        $this->date=new \DateTime();
+        $this->Date=new \DateTime();
 
     }
     
