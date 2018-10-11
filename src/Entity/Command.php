@@ -36,11 +36,13 @@ class Command
      */
     private $VisitorEmail;
 
-    private $resolver;
+    private $TotalPrice;
+
 
     public function __construct()
     {
         $this->ticketsOrdered = new ArrayCollection();
+        $this->setName(uniqid(rand()));
     }
 
     public function getId(): ?int
@@ -57,6 +59,12 @@ class Command
     {
         $this->name = $name;
 
+        return $this;
+    }
+    //added for phpunit testing
+    public function setId(int $id): self
+    {
+        $this->id=$id;
         return $this;
     }
 
@@ -101,6 +109,17 @@ class Command
         $this->VisitorEmail = $VisitorEmail;
 
         return $this;
+    }
+
+    public function setTotalPrice(float $price)
+    {
+        $this->TotalPrice=$price;
+        return $this;
+    }
+
+    public function getTotalPrice()
+    {
+        return $this->TotalPrice;
     }
 
 }

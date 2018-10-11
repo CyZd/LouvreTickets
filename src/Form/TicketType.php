@@ -31,7 +31,7 @@ class TicketType extends AbstractType
                 'label' => 'Prénom'
             ))
             ->add('VisitorSurName', TextType::class, array(
-                'constraints' => new NotBlank(),
+                'constraints' => array(new NotBlank()),
                 'label'=> 'Nom'
             ))
             ->add('VisitorCountry', CountryType::class, array(

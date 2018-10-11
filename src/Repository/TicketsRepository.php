@@ -44,6 +44,15 @@ class TicketsRepository extends ServiceEntityRepository
         ;
     }
 
+    public function removeTicket($id)
+    {
+        $qb=$this->createQueryBuilder('t')
+            ->andWhere('t.commandId = :Id')
+            ->setParameter('Id', $id)
+            ->getQuery();
+        $this->remove($qb);
+    }
+
     /*
     public function findOneBySomeField($value): ?Tickets
     {

@@ -34,6 +34,15 @@ class CommandRepository extends ServiceEntityRepository
         ;
     }
 
+    public function removeCommand($id)
+    {
+        $qb=$this->createQueryBuilder('c')
+            ->andWhere('c.Id = :Id')
+            ->setParameter('Id', $id)
+            ->getQuery();
+        $this->remove($qb);
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Command

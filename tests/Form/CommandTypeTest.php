@@ -11,56 +11,61 @@ use App\Entity\Categories;
 use App\Form\TicketType;
 use App\Form\CommandType;
 use Stripe\Stripe;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 
 class CommandTypeTest extends TypeTestCase
 {    
 
-
+    private $validator;
     //form test
     public function testCommandType()
     {
+        $datas=array(
+            'VisitorEmail'=>'test@test.fr',
+        );
+
         $mockOrder=new Command;
-        $mockTicket=new Tickets;
-
-        $mockTicket->setDate(New \DateTime('now'));
-        
-
-        $mockOrder->addTicketsOrdered($mockTicket);
-        $mockOrder->setName(uniqid(rand()));
+        $mockOrder->setId(1);
 
         $form=$this->factory->create(CommandType::class, $mockOrder);
 
-        
-        $form->setValues(array(
-            'command[VisitorEmail]'=>'sylvain.duval29@hotmail.fr',
-        ));
+        $referenceOrder=new Command;
+        $referenceOrder->setId(2);
 
-        $values=$form->getPhpValues();
+        $referenceOrder->setVisitorEmail('test@test.fr');
 
-        $values['command']['ticketsOrdered'][0]['VisitorName']='UnPrénomVisiteur';
-        $values['command']['ticketsOrdered'][0]['VisitorSurName']='UnNomVisiteur';
-        $values['command']['ticketsOrdered'][0]['VisitorCountry']='AF';
-        $values['command']['ticketsOrdered'][0]['VisitorDoB']['day']='13';
-        $values['command']['ticketsOrdered'][0]['VisitorDoB']['month']='0002';
-        $values['command']['ticketsOrdered'][0]['VisitorDoB']['year']='1984';
-        $values['command']['ticketsOrdered'][0]['DesiredDate']['day']='22';
-        $values['command']['ticketsOrdered'][0]['DesiredDate']['month']='0004';
-        $values['command']['ticketsOrdered'][0]['DesiredDate']['year']='2019';
-        $values['command']['ticketsOrdered'][0]['DayType']->select(1);
-
-
-        $form->submit($values);
-        $client->followRedirect();
+        $form->submit($datas);
         
         $view=$form->createView();
         $children=$view->children;
 
-        foreach(array_keys($values) as $key){
+        foreach(array_keys($datas) as $key){
             $this->assertArrayHasKey($key, $children);
         }
 
     }
+
+    protected function getExtensions()
+    {
+        $this->validator = $this->createMock(ValidatorInterface::class);
+        $this->validator
+            ->method('validate')
+            ->will($this->returnValue(new ConstraintViolationList()));
+        $this->validator
+            ->method('getMetadataFor')
+            ->will($this->returnValue(new ClassMetadata(Form::class)));
+
+        return array(
+            new ValidatorExtension($this->validator),
+        );
+    }
+
+    
 }
 ?>

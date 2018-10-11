@@ -14,7 +14,7 @@ class Tickets
     public function __construct()
     {
         $this->Date=new \DateTime();
-
+        $this->setDate(New \DateTime('now'));
     }
     
     /**
@@ -259,9 +259,6 @@ class Tickets
 
         return $this;
     }
-
-
-
 
     
 }

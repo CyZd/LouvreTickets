@@ -1,0 +1,3 @@
+$client = static::createClient(); $container = $client->getContainer(); $container->set('session', $sessionMock);
+
+doctrine: dbal: dbname: "%database_name%_test"

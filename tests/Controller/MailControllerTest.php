@@ -1,20 +1,30 @@
 <?php
 namespace App\Tests\Controller;
+use App\Controller\PagesController;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use App\Entity\Tickets;
+use App\Entity\Command;
 
 
 class testSendMailTickets extends WebTestCase
 {
-    public function testMailSent()
 
+    public function testMailSent()
     {
+        $mockOrder=new Command;
+        $mockTicket=new Tickets;
+
+        $mockOrder->addTicketsOrdered($mockTicket);
+        $mockOrder->setId(5);
+        $mockOrder->setVisitorEmail('sylvain.duval29@hotmail.fr');
+
         $client = $client=static::createClient();
 
         $client->enableProfiler();
 
-        $crawler = $client->request('POST', 'App\Controller\PagesController::sendMailTickets');
+        $crawler = $client->request('POST', 'App\Mailer\Mailer::sendMailTickets()');
 
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 

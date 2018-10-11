@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfd14ea089d73238e8c838293135fef8",
+    "content-hash": "64233fa36b0b4fae156283ba3ed12190",
     "packages": [
         {
             "name": "azuyalabs/yasumi",
@@ -2795,7 +2795,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v4.1.4",
+            "version": "v4.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",

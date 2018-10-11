@@ -5,7 +5,7 @@ Mail envoyé à {{ command.VisitorEmail }}
 Votre achat se compose des éléments suivants:
     {% for ticket in command.ticketsOrdered %}
     <ul>------------
-        <li>Numéro du ticket: {{ ticket.id }}</li>
+        <li>Numéro du ticket: {{ command.Name }}-{{ ticket.id }}</li>
         <li>Nom de l'acheteur: {{ ticket.VisitorSurName }}</li>
         <li>Prénom de l'acheteur: {{ ticket.VisitorName}}</li>
         <li>Date de visite souhaitée: {{ ticket.DesiredDate|date("d/m/Y") }}</li>
