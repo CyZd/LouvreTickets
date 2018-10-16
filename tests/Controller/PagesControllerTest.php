@@ -21,6 +21,9 @@ use App\PriceCheck\PriceChecker;
 use App\Repository\TicketsRepository;
 use App\Repository\CommandRepository;
 use App\Repository\CategoriesRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -139,14 +142,19 @@ class PagesControllerTest extends WebTestCase
     {
         $catChild=new Categories();
         $catChild->setPricing(10);
-        $catChild->setLowValue(0);
+        $catChild->setLowValue(1);
         $catChild->setHighValue(15);
 
 
         $categoriesRepo=$this->createMock(CategoriesRepository::class);
         $categoriesRepo->expects($this->any())
-            ->method('find')
+            ->method('findAll')
             ->willReturn($catChild);
+
+        $catManager=$this->createMock(EntityManagerInterface::class);
+        $catManager->expects($this->any())
+            ->method('getRepository')
+            ->willReturn($categoriesRepo);
 
         $ticketChild=new Tickets;
         $ticketChild->setVisitorDoB(new \Datetime('23-05-2014'));
@@ -155,10 +163,15 @@ class PagesControllerTest extends WebTestCase
         $order=new Command();
         $order->addTicketsOrdered($ticketChild);
 
-        $priceCheck=new PriceChecker(new EntityManagerInterface);
-        $result=$priceCheck->checkPrices($order);
+        $priceCheck=new PriceChecker($catManager);
 
-        $this->assertEquals($result, 10);
+        $priceCheck->checkPrices($order);
+        $priceCheck->setFullPrice($order);
+
+        $result=$order->getTotalPrice();
+
+
+        $this->assertEquals(10, $result);
 
     }
     

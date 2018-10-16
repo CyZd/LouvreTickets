@@ -24,7 +24,7 @@ class testSendMailTickets extends WebTestCase
 
         $client->enableProfiler();
 
-        $crawler = $client->request('POST', 'App\Mailer\Mailer::sendMailTickets()');
+        $crawler = $client->request('POST', 'App\Controller\PagesController::sendMail()');
 
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 

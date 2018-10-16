@@ -98,7 +98,7 @@ class PagesController extends Controller
         
         if($caller->paymentSuccess()==1)
         {
-            $mailer->sendMailTickets($currentOrder);
+            $this->sendMail();
             return $this->render('paymentMade.html.twig', array('order'=>$currentOrder, 'ticket'=>$currentOrder->getTicketsOrdered()));
         }
         else
@@ -118,6 +118,12 @@ class PagesController extends Controller
 
             return $this->render('paymentFail.html.twig');   
         }     
+    }
+
+    public function sendMail(EntityManagerInterface $entityManager, Mailer $mailer)
+    {
+        $currentOrder=$entityManager->getRepository(Command::class)->find($orderId);
+        $this->mailer->sendMailTickets($currentOrder);
     }
 
     
