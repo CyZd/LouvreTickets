@@ -12,6 +12,12 @@ body {
     height: 100%;
 }
 
+.full-screen{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .container {
     padding-right: 15px;
     padding-left: 15px;
@@ -47,10 +53,10 @@ div>button#command_Save{
     position: fixed;
     top: 0;
     left: 0;
-    opacity: 0.4 !important;
-    filter: alpha(opacity=40);
+    opacity: 0.2 !important;
+    filter: alpha(opacity=20);
     -webkit-filter: blur(4px);filter: blur(4px);
-    -webkit-filter: sepia(100%);filter: sepia(100%);
+    -webkit-filter: grayscale(80%);filter: grayscale(80%);
 
     z-index:-20;
 }
@@ -96,13 +102,34 @@ a {
 }
 
 
+/*Navbar custom**/
 
+.navbar-brand {
+  font-family: 'Courgette', cursive;
+  font-size: 24px;
+}
+.navbar-dark .navbar-nav .nav-link:hover, 
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+}
+.navbar-dark .navbar-nav .show > .nav-link, 
+.navbar-dark .navbar-nav .active > .nav-link, 
+.navbar-dark .navbar-nav .nav-link.show, 
+.navbar-dark .navbar-nav .nav-link.active {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/**purchase page adjustments**/
+#back-first-page{
+  margin: 50px;
+}
 
     /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
 /* Carousel base class */
-.carousel {
+/* .carousel {
   width: auto;
   margin: 2rem;
   padding-top: 4rem;
@@ -112,15 +139,15 @@ a {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-}
+} */
 /* Since positioning the image, we need to help out the caption */
-.carousel-caption {
+/* .carousel-caption {
   bottom: 3rem;
   z-index: 10;
-}
+} */
 
 /* Declare heights because of positioning of img element */
-.carousel-item {
+/* .carousel-item {
   height: 30rem;
   background-color: rgb(255, 250, 250);
 
@@ -135,21 +162,47 @@ a {
   width: 100%;
 }
 
-.carousel-item > img {
+.carousel-item > img { */
   /* box-sizing: content-box!important; */
-  position: absolute;
+  /* position: absolute;
   top: 0;
   left: 0;
   max-width: 100%;
   height: 30rem;
   vertical-align:middle;
+} */
+.carousel{
+  height: auto;
 }
 
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+  height: 32rem;
+  background-color: #777;
+}
+.carousel-item > img {
+  /*position: absolute;
+  top: 0;
+  left: 0;*/
+  width: 100%;
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
+#second-page-part{
+  margin-top: 190px;
+  margin-bottom: 50px;
+}
+
 .marketing .col-lg-4 {
   margin-bottom: 1.5rem;
   text-align: center;
@@ -161,6 +214,7 @@ a {
   margin-right: .75rem;
   margin-left: .75rem;
 }
+
 
 @media (min-width: 40em) {
   /* Bump up size of carousel content */
@@ -212,5 +266,6 @@ a {
     button.navbar-toggler.collapsed{
     float: right!important;
     }
+
 
 }

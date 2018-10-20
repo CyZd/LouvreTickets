@@ -21,10 +21,11 @@ class testSendMailTickets extends WebTestCase
         $mockOrder->setVisitorEmail('sylvain.duval29@hotmail.fr');
 
         $client = $client=static::createClient();
+        $client->followRedirects();
 
         $client->enableProfiler();
 
-        $crawler = $client->request('POST', 'App\Controller\PagesController::sendMail()');
+        $crawler = $client->request('POST', '/executePayment/');
 
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 

@@ -47,6 +47,9 @@ Encore
     .addPlugin(new CopyWebpackPlugin([
         {from: './assets/images', to:'static'}
     ]))
+    .addPlugin(new CopyWebpackPlugin([
+        {from: './assets/vendor', to:'static'}
+    ]))
 ;
 
 module.exports = Encore.getWebpackConfig();

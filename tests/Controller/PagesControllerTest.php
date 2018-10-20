@@ -157,7 +157,7 @@ class PagesControllerTest extends WebTestCase
             ->willReturn($categoriesRepo);
 
         $ticketChild=new Tickets;
-        $ticketChild->setVisitorDoB(new \Datetime('23-05-2014'));
+        $ticketChild->setVisitorDoB(new \Datetime('05/23/2014'));
         $ticketChild->setReducedPrice(false);
 
         $order=new Command();
@@ -169,6 +169,8 @@ class PagesControllerTest extends WebTestCase
         $priceCheck->setFullPrice($order);
 
         $result=$order->getTotalPrice();
+
+
 
 
         $this->assertEquals(10, $result);

@@ -4,7 +4,7 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     
-    env(DATABASE_URL): "mysql://USERNAME:PASSWORD@IPADRESS:PORT/DBNAME"
+    env(DATABASE_URL): "mysql://root:CorrectBatteryHorse84@127.0.0.1:3306/louvre"
 
 doctrine:
     dbal:

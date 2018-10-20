@@ -27,7 +27,7 @@ class PriceChecker
             {
                 $birthDate=$element->getVisitorDoB()->format('Y');
                 $age=$currentDate-$birthDate;
-
+                var_dump($age);
                 if($element->getReducedPrice())
                 {
                     $age=200;
