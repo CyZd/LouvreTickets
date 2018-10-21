@@ -5,22 +5,36 @@
 
 <p>Un e-mail de confirmation a été envoyée à l'adresse {{ order.VisitorEmail }}</p>
 
-<h4>Récapitulatif de votre commande</h4>
-    {% set fullPrice = 0 %}
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+                <h4>Récapitulatif de votre commande</h4>
+        </div>
+                    {% set fullPrice = 0 %}
+            <div="card-body">
+                    {% for tickets in ticket %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Nom de l'acheteur: {{ tickets.VisitorSurName }}</li>
+                            <li class="list-group-item">Prénom de l'acheteur: {{ tickets.VisitorName}}</li>
+                            <li class="list-group-item">Date de visite souhaitée: {{ tickets.DesiredDate|date("d/m/Y") }}</li>
+                            <li class="list-group-item">Date d'achat: {{ tickets.Date|date("d/m/Y") }}</li>
+                            <li class="list-group-item">Type de journée: {% if tickets.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
+                            <li class="list-group-item">Prix: {{ tickets.PriceTag }} euros</li>
+                        </ul>
+                        {% set fullPrice = fullPrice + tickets.PriceTag %}
+                    {% endfor %}
+            </div>
+                    <h4>Le coût total de votre achat est de:</h4>
+                    <h4 class="text-center">{{ fullPrice }} euros.</h4>
+            </div>
 
-    {% for tickets in ticket %}
-        <ul>
-            <li>Nom de l'acheteur: {{ tickets.VisitorSurName }}</li>
-            <li>Prénom de l'acheteur: {{ tickets.VisitorName}}</li>
-            <li>Date de visite souhaitée: {{ tickets.DesiredDate|date("d/m/Y") }}</li>
-            <li>Date d'achat: {{ tickets.Date|date("d/m/Y") }}</li>
-            <li>Type de journée: {% if tickets.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
-            <li>Prix: {{ tickets.PriceTag }} euros</li>
-        </ul>
-        {% set fullPrice = fullPrice + tickets.PriceTag %}
-    {% endfor %}
-
-    <h4>Le coût total de votre achat est de:</h4>
-    {{ fullPrice }} euros.
+            <div class="row justify-content-md-center">
+                <div class="col-6">
+                    <a href="/" class="btn btn-dark" role="button">Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

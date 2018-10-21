@@ -1,18 +1,41 @@
 
 
 {% block body %}
-Mail envoyé à {{ command.VisitorEmail }}
-Votre achat se compose des éléments suivants:
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+
+<div class="alert alert-dark" role="alert">
+Courrier envoyé à {{ command.VisitorEmail }}
+<p>Votre achat se compose des éléments suivants:</p>
+</div>
+
     {% for ticket in command.ticketsOrdered %}
-    <ul>------------
-        <li>Numéro du ticket: {{ command.Name }}-{{ ticket.id }}</li>
-        <li>Nom de l'acheteur: {{ ticket.VisitorSurName }}</li>
-        <li>Prénom de l'acheteur: {{ ticket.VisitorName}}</li>
-        <li>Date de visite souhaitée: {{ ticket.DesiredDate|date("d/m/Y") }}</li>
-        <li>Date d'achat: {{ ticket.Date|date("d/m/Y") }}</li>
-        <li>Type de journée: {% if ticket.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
-        <li>Prix: {{ ticket.PriceTag }} euros</li>
-    </ul>
+<div class="container">
+    <div class="row justify-content-md-center">
+    <div class="col-8">
+                    <div class="card text-dark bg-warning mb-3">
+                        <p class="card-header">Numéro du ticket: {{ command.Name }}-{{ ticket.id }}</p>
+                            <div class="card-body">
+                                <div class="card-title">Nom de l'acheteur: {{ ticket.VisitorSurName }}</div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Prénom de l'acheteur: {{ ticket.VisitorName}}</li>
+                                    <li class="list-group-item">Date de visite souhaitée: {{ ticket.DesiredDate|date("d/m/Y") }}</li>
+                                    <li class="list-group-item">Date d'achat: {{ ticket.Date|date("d/m/Y") }}</li>
+                                    <li class="list-group-item">Type de journée: {% if ticket.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
+                                    <li class="blockquote-footer"><h3>Prix: {{ ticket.PriceTag }} euros<h3></li>
+                                </ul>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
     {% endfor %}
 
+
+<style>
+.li {
+    list-style-type: none;
+}
+</style>
 {% endblock %}
