@@ -8,6 +8,7 @@
         "sensio/framework-extra-bundle": "^5.2",
         "stripe/stripe-php": "^6.17",
         "symfony/asset": "^4.1",
+        "symfony/config": "^4.1",
         "symfony/console": "^4.1",
         "symfony/event-dispatcher": "^4.1",
         "symfony/expression-language": "^4.1",
