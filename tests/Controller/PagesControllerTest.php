@@ -36,7 +36,7 @@ class PagesControllerTest extends WebTestCase
     public function testIndex()
     {
         $client = static::createClient(array('http://localhost/', 8000));
-        $client->request('GET', '/');
+        $client->request('GET', '/fr/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
@@ -45,7 +45,7 @@ class PagesControllerTest extends WebTestCase
         $client = static::createClient(array('http://localhost:8000/', 8000));
         $session= $client->getContainer()->get('session');
         $session->start();
-        $client->request('GET', '/');
+        $client->request('GET', '/fr/');
         $sessionData=$session->all();
         $testString='orderToken';
         $this->assertTrue(array_key_exists($testString,$sessionData));
@@ -54,14 +54,14 @@ class PagesControllerTest extends WebTestCase
     public function testForm()
     {
         $client = static::createClient();
-        $crawler=$client->request('GET', '/formtest/');
+        $crawler=$client->request('GET', '/fr/formtest/');
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
     public function testPaymentNotFound()
     {
         $client = static::createClient(array('http://localhost:8000/', 8000));
-        $crawler=$client->request('GET', '/executePayment/');
+        $crawler=$client->request('GET', 'fr/executePayment/');
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
@@ -77,7 +77,7 @@ class PagesControllerTest extends WebTestCase
         $client = static::createClient(array('http://localhost:8000/', 8000));
         $session= $client->getContainer()->get('session');
         $session->start();
-        $client->request('GET', '/');
+        $client->request('GET', '/fr/');
         $session->set('orderToken', $orderId);
         $sessionData=$session->all();
 
@@ -115,7 +115,7 @@ class PagesControllerTest extends WebTestCase
         $client = static::createClient(array('http://localhost:8000/', 8000));
         $session= $client->getContainer()->get('session');
         $session->start();
-        $client->request('GET', '/');
+        $client->request('GET', '/fr/');
         $session->set('orderToken', $orderId);
         $sessionData=$session->all();
 
@@ -145,11 +145,17 @@ class PagesControllerTest extends WebTestCase
         $catChild->setLowValue(1);
         $catChild->setHighValue(15);
 
+        $catChild2=new Categories();
+        $catChild2->setPricing(15);
+        $catChild2->setLowValue(16);
+        $catChild2->setHighValue(50);
+        
+        $catArray=array($catChild,$catChild2);
 
         $categoriesRepo=$this->createMock(CategoriesRepository::class);
         $categoriesRepo->expects($this->any())
             ->method('findAll')
-            ->willReturn($catChild);
+            ->willReturn($catArray);
 
         $catManager=$this->createMock(EntityManagerInterface::class);
         $catManager->expects($this->any())
