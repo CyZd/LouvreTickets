@@ -25,13 +25,14 @@ class testSendMailTickets extends WebTestCase
 
         $client->enableProfiler();
 
-        $crawler = $client->request('POST', '/executePayment/');
+        $crawler = $client->request('GET', '/mail_order');
 
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 
         $this->assertSame(1, $mailCollector->getMessageCount());
 
-        $collectedMessages=$mailCollector->getMessages();
+        $collectedMessages=$mailCollector->getMessages('default_mailer');
+        $message=$mailCollector->getMessageCount('default_mailer');
         $message=$collectedMessages[0];
 
 

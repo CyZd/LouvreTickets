@@ -1,5 +1,5 @@
 index:
-    path: /
+    path: /{_locale}/
     controller: App\Controller\PagesController::index
     requirements:
         _locale: en|fr
@@ -7,18 +7,31 @@ index:
 
 formTest:
     path:
-        /formtest/
+        /{_locale}/formtest/
     controller: App\Controller\PagesController::formBuildTest
+    requirements:
+        _locale: en|fr
 
 exec_payment:
     path:
-        /executePayment/
+        /{_locale}/executePayment/
     controller: App\Controller\PagesController::executePayment
+    requirements:
+        _locale: en|fr
 
 payment_list:
     path:
-        /payment_list/
+        /{_locale}/payment_list/
     controller: App\Controller\PagesController::paymentList
+    requirements:
+        _locale: en|fr
+
+mail_order:
+    path:
+        /{_locale}/mail_order/
+    controller: App\Controller\PagesController::sendMail
+    requirements:
+        _locale: en|fr
 
 
 

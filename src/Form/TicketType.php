@@ -43,7 +43,8 @@ class TicketType extends AbstractType
                     'message'=>'Vous ne pouvez pas commander pour une date passée.',
                     )),
                 'format' => 'ddMMMMyyyy',
-                'label' =>'Date de visite souhaitée'
+                'label' =>'Date de visite souhaitée',
+                'years'=>range(date('Y'),2028)
             ))
             ->add('DayType', ChoiceType::class, [
                 'choices'=> array(
@@ -54,11 +55,13 @@ class TicketType extends AbstractType
             ])
             ->add('VisitorDoB', BirthdayType::class, array(
                 'format'=> 'ddMMMMyyyy',
-                'label'=> 'Date de naissance'
+                'label'=> 'Date de naissance',
+                'help'=>'Connaitre votre âge nous permet d\'ajuster nos tarifs.'
             ))
             ->add('ReducedPrice', CheckboxType::class, array(
                 'required'=>false,
-                'label'=>'Je dispose d\'un tarif réduit'
+                'label'=>'Je dispose d\'un tarif réduit',
+                'help'=>'La réduction s\'applique sur présentation en caisse d\'un justificatif.'
             ));
             // ->add('Save', SubmitType::class, array(
             //     'label'=>'Commander'

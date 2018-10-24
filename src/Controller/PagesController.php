@@ -28,10 +28,14 @@ use App\Event\SessionEvent;
 use App\Event\OrderEvent;
 use App\Mailer\Mailer;
 
+use Symfony\Component\Routing\Annotation\Route;
+
 
 class PagesController extends Controller
 {
-    
+    /**
+     * @Route("/{_locale}/", name="index")
+     */
     public function index(Environment $twig, SessionInterface $session)
     {
         $sessionEvent=new SessionEvent($session);
@@ -39,6 +43,9 @@ class PagesController extends Controller
         return new Response($twig->render('welcomePage.html.twig'));
     }
 
+    /**
+     * @Route("/{_locale}/formtest/", name="formTest")
+     */
     public function formBuildTest(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager)
     {
         
@@ -75,6 +82,9 @@ class PagesController extends Controller
 
     }
 
+    /**
+     * @Route("/{_locale}/executePayment/", name="exec_payment")
+     */
     public function executePayment(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager, BankCaller $caller, Mailer $mailer)
     {
         $orderId=$session->get('orderToken');
@@ -120,6 +130,9 @@ class PagesController extends Controller
         }     
     }
 
+    /**
+     * @Route("/{_locale}/mail_order/", name="mail_order")
+     */
     public function sendMail(EntityManagerInterface $entityManager, Mailer $mailer,SessionInterface $session)
     {
         $orderId=$session->get('orderToken');
@@ -128,7 +141,9 @@ class PagesController extends Controller
     }
 
     
-
+    /**
+     * @Route("/{_locale}/payment_list/", name="payment_list")
+     */
     public function paymentList(EntityManagerInterface $entityManager)
     {
         $entityManager->getRepository(Tickets::class);
