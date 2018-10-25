@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\Mailer;
 
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -21,7 +21,7 @@ class Mailer
         $this->mailer=$mailer;
     }
 
-    public function sendMailTickets($orderId)
+    public function sendMailTickets($orderId)//command a la place
     {
         // $orderId=$this->session->get('orderToken');
         if($orderId==null)

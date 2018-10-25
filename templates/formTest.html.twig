@@ -7,17 +7,17 @@
 {% block _command_collection_entry_widget %}
 
     <div class="col-lg-12 align-items-center">
-        <h6>Cliquez ici pour compléter votre achat:</h6>
+        <h6>{% trans %}Cliquez ici pour compléter votre achat:{% endtrans %}</h6>
             <p>
                 <a class="btn btn-info" data-toggle="collapse" href="#collapseticket_{{ form.vars.id }}" role="button" aria-expanded="true" aria-controls="collapseticket">
-                Aficher/Masquer ce billet
+                {% trans %}Afficher/Masquer ce billet{% endtrans %}
                 </a>
             </p>
             <div class="collapse show" id="collapseticket_{{ form.vars.id }}">
                 <div class="card card-body">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            {{ form_row(form['VisitorName']) }}
+                            {{ form_row(form['VisitorName'],{'label':'Prénom'|trans}) }}
                         </div>
                         <div class="form-group col-md-6">
                             {{ form_row(form['VisitorSurName']) }}
@@ -28,10 +28,10 @@
                         <div class="form-group col-sm-6">
                             {{ form_row(form['VisitorDoB']) }}
                         </div>
-                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="Votre attention:" data-content="Vous ne pouvez pas commander pour une date passée, un dimanche ou un jour férié.">
+                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="Attention:" data-content="Pas de commande pour une date passée, un dimanche ou un jour férié. / No order on a past date, a Sunday or a feast day.">
                             {{ form_row(form['DesiredDate']) }}
                         </div>
-                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="Votre attention:" data-content="Si vous visitez aujourd'hui, la journée entière n'est plus disponible passé 14h.">
+                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="Attention:" data-content="La journée entière n'est plus disponible passé 14h. / Full-day visit is unavailable after 2pm.">
                             {{ form_row(form['DayType']) }}
                         </div>
                     </div>
@@ -53,7 +53,7 @@
 
 {% block body %}
 {{ form_start(form) }}
-    <h5>Vous pouvez commander plusieurs billets à l'aide du bouton "Ajouter un billet".</h5> 
+    <h5>{% trans %}Vous pouvez commander plusieurs billets à l'aide du bouton "Ajouter un billet".{% endtrans %}</h5> 
         <div class="col-lg-12">
             <div class="ticketsOrdered" id="ticket_list" data-prototype="{{ form_widget(form.ticketsOrdered.vars.prototype)|e('html_attr')}}">
                 {% for tickets in form.ticketsOrdered %}        
@@ -63,7 +63,7 @@
         </div>
  {{ form_end(form) }}
 <div class="row justify-content-md-center">
-    <a href="{{path('index')}}" class="btn btn-dark" id="back-first-page" role="button">Retour à l'accueil</a>
+    <a href="{{path('index')}}" class="btn btn-dark" id="back-first-page" role="button">{% trans %}Retour à l'accueil{% endtrans %}</a>
 </div>
 
 
@@ -85,7 +85,7 @@ $(function () {
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addTagButton = $('<button type="button" class="btn btn-info">Ajouter un billet</button>');
+var $addTagButton = $('<button type="button" class="btn btn-info">{% trans %}Ajouter un billet{% endtrans %}</button>');
 var $newLinkLi = $('<div class="col-lg-6"></div>').append($addTagButton);
 
 
@@ -144,7 +144,7 @@ function addNewForm($collectionHolder, $newLinkLi) {
 }
 
 function addDeleteForm($form){
-    var $addDeleteButton = $('<div class="col-lg-6"><p><button type="button" class="btn btn-danger">Supprimer ce billet</button></p></div>');
+    var $addDeleteButton = $('<div class="col-lg-6"><p><button type="button" class="btn btn-danger">{% trans %}Supprimer ce billet{% endtrans %}</button></p></div>');
     $form.append($addDeleteButton);
 
     $addDeleteButton.on('click',function(e){

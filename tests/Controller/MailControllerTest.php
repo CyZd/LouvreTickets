@@ -25,7 +25,7 @@ class testSendMailTickets extends WebTestCase
 
         $client->enableProfiler();
 
-        $crawler = $client->request('GET', '/mail_order');
+        $crawler = $client->request('POST', '/fr/mail_order');
 
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 

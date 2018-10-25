@@ -1,38 +1,38 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h3>Merci, votre commande a bien été enregistrée!</h3>
+<h3>{% trans %}Merci, votre commande a bien été enregistrée!{% endtrans %}</h3>
 
-<p>Un e-mail de confirmation a été envoyée à l'adresse {{ order.VisitorEmail }}</p>
+<p>{% trans %}Un e-mail de confirmation a été envoyée à l'adresse {% endtrans %}{{ order.VisitorEmail }}</p>
 
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-                <h4>Récapitulatif de votre commande</h4>
+                <h4>{% trans %}Récapitulatif de votre commande{% endtrans %}</h4>
         </div>
                     {% set fullPrice = 0 %}
             <div="card-body">
                     {% for tickets in ticket %}
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Nom de l'acheteur: {{ tickets.VisitorSurName }}</li>
-                            <li class="list-group-item">Prénom de l'acheteur: {{ tickets.VisitorName}}</li>
-                            <li class="list-group-item">Date de visite souhaitée: {{ tickets.DesiredDate|date("d/m/Y") }}</li>
-                            <li class="list-group-item">Date d'achat: {{ tickets.Date|date("d/m/Y") }}</li>
-                            <li class="list-group-item">Type de journée: {% if tickets.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
-                            <li class="list-group-item">Prix: {{ tickets.PriceTag }} euros</li>
+                            <li class="list-group-item">{% trans %}Nom de l'acheteur: {% endtrans %}{{ tickets.VisitorSurName }}</li>
+                            <li class="list-group-item">{% trans %}Prénom de l'acheteur: {% endtrans %}{{ tickets.VisitorName}}</li>
+                            <li class="list-group-item">{% trans %}Date de visite souhaitée: {% endtrans %}{{ tickets.DesiredDate|date("d/m/Y") }}</li>
+                            <li class="list-group-item">{% trans %}Date d'achat: {% endtrans %}{{ tickets.Date|date("d/m/Y") }}</li>
+                            <li class="list-group-item">{% trans %}Type de journée: {% endtrans %}{% if tickets.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
+                            <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
                         </ul>
                         {% set fullPrice = fullPrice + tickets.PriceTag %}
                     {% endfor %}
             </div>
-                    <h4>Le coût total de votre achat est de:</h4>
+                    <h4>{% trans %}Le coût total de votre achat est de:{% endtrans %}</h4>
                     <h4 class="text-center">{{ fullPrice }} euros.</h4>
             </div>
 
             <div class="row justify-content-md-center">
                 <div class="col-6">
-                    <a href="{{path('index')}}" class="btn btn-dark" role="button">Retour à l'accueil</a>
+                    <a href="{{path('index')}}" class="btn btn-dark" role="button">{% trans %}Retour à l'accueil{% endtrans %}</a>
         </div>
     </div>
 </div>

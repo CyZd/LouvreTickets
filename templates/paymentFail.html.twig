@@ -2,13 +2,13 @@
 
 {% block body %}
 
-<p>Une erreur est survenue, votre paiement n'a pas pu être confirmé.</p>
+<p>{% trans %}Une erreur est survenue, votre paiement n'a pas pu être confirmé.{% endtrans %}</p>
 
-<a href="mailto:admin@louvre.fr" class="btn btn-info" role="button">Contacter l'assistance</a>
+<a href="mailto:admin@louvre.fr" class="btn btn-info" role="button">{% trans %}Contacter l'assistance{% endtrans %}</a>
 
 <div class="row justify-content-md-center">
     <div class="col-6">
-        <a href="{{path('index')}}" class="btn btn-dark" role="button">Retour à l'accueil</a>
+        <a href="{{path('index')}}" class="btn btn-dark" role="button">{% trans %}Retour à l'accueil{% endtrans %}</a>
     </div>
 </div>
 

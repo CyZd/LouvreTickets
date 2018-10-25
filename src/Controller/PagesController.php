@@ -37,25 +37,11 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
 class PagesController extends Controller
 {
-    public function loadTranslator(Environment $twig)
-    {
-        $translator=new Translator('en');
-        $translator->addLoader('messages.en.php', new PhpFileLoader());
-        $translator->addResource(
-            'messages.en.php',
-            dirname(__DIR__).'/translations/messages.en.php',
-            'en'
-        );
-
-        // $twig->addExtension(new TranslationExtension($translator));
-    }
-
     /**
      * @Route("/{_locale}/", name="index")
      */
     public function index(Environment $twig, SessionInterface $session)
     {
-        $this->loadTranslator($twig);
         $sessionEvent=new SessionEvent($session);
         $currentSession=$this->get('event_dispatcher')->dispatch(SessionEvent::SESSION,$sessionEvent)->getSession();
         return new Response($twig->render('welcomePage.html.twig'));

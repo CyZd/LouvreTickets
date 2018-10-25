@@ -61,7 +61,8 @@ class TicketType extends AbstractType
             ->add('ReducedPrice', CheckboxType::class, array(
                 'required'=>false,
                 'label'=>'Je dispose d\'un tarif réduit',
-                'help'=>'La réduction s\'applique sur présentation en caisse d\'un justificatif.'
+                'help'=>'La réduction s\'applique sur présentation en caisse d\'un justificatif.',
+                'translation_domain'=> null
             ));
             // ->add('Save', SubmitType::class, array(
             //     'label'=>'Commander'
