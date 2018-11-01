@@ -20,8 +20,6 @@ class SessionSubscriber implements EventSubscriberInterface
     public function onSessionStart(SessionEvent $session)
     {
         $currentSession=$session->getSession();
-        $currentSession->set('orderToken','');
-        
-    } 
+        $currentSession->set('orderToken', '');
+    }
 }
-?>

@@ -19,7 +19,4 @@ class SessionEvent extends Event
     {
         return $this->session;
     }
-
-
 }
-?>

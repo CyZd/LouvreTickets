@@ -9,7 +9,7 @@ use App\PriceCheck\PriceChecker;
 
 class OrderSubscriber implements EventSubscriberInterface
 {
-    private $checker; 
+    private $checker;
 
     public function __construct(PriceChecker $checker)
     {
@@ -35,8 +35,4 @@ class OrderSubscriber implements EventSubscriberInterface
         $order=$event->getOrder();
         $this->checker->setFullPrice($order);
     }
-
-
 }
-
-?>

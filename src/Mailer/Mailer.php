@@ -10,28 +10,20 @@ use App\Entity\Categories;
 
 class Mailer
 {
-    private $session;
-    private $entityManager;
+    private $twig;
+    private $mailer;
 
-    public function __construct(SessionInterface $session, EntityManagerInterface $entityManager,\Twig_Environment $twig, \Swift_Mailer $mailer)
+
+    public function __construct(\Twig_Environment $twig, \Swift_Mailer $mailer)
     {
-        $this->session=$session;
-        $this->entityManager=$entityManager;
         $this->twig=$twig;
         $this->mailer=$mailer;
     }
 
-    public function sendMailTickets($orderId)//command a la place
+    public function sendMailTickets(Command $order)
     {
-        // $orderId=$this->session->get('orderToken');
-        if($orderId==null)
-        {
-            throw $this->createNotFoundException('Envoi mail impossible-Pas de commande trouvée');
-        }
-        $command=$this->entityManager->getRepository(Command::class)->find($orderId);
-
-        $mailDestination=$command->getVisitorEmail();
-        $ticket=$command->getTicketsOrdered();
+        $mailDestination=$order->getVisitorEmail();
+        $ticket=$order->getTicketsOrdered();
 
         $message=(new \Swift_Message('Musée du louvre: votre commande est arrivée'))
         ->setFrom('louvre-musee-reservation@louvre.gouv.fr')
@@ -41,13 +33,11 @@ class Mailer
                 'emails/registration.html.twig',
                 array(
                     'ticket'=>$ticket,
-                    'command'=>$command,
+                    'command'=>$order,
                 )
             ),
             'text/html'
         );
         $this->mailer->send($message);
-        
     }
 }
-?>

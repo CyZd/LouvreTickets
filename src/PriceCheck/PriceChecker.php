@@ -1,4 +1,4 @@
-<?
+<?php
 //src/PriceCheck/PriceCHecker
 
 namespace App\PriceCheck;
@@ -23,41 +23,35 @@ class PriceChecker
         $currentDate=date('Y');
 
         $ticketList=$order->getTicketsOrdered();
-        foreach($ticketList as $element)
-            {
-                $birthDate=$element->getVisitorDoB()->format('Y');
-                $age=$currentDate-$birthDate;
+        foreach ($ticketList as $element) {
+            $birthDate=$element->getVisitorDoB()->format('Y');
+            $age=$currentDate-$birthDate;
 
-                if($element->getReducedPrice())
-                {
-                    $age=200;
-                }
+            if ($element->getReducedPrice()) {
+                $age=200;
+            }
 
-                $pricesRange=$this->entityManager->getRepository(Categories::class)->findAll();
-                foreach($pricesRange as $price)
-                {
-                    $lowEnd=$price->getLowValue();
-                    $highEnd=$price->getHighValue();
-                    $correctPrice=$price->getPricing();
+            $pricesRange=$this->entityManager->getRepository(Categories::class)->findAll();
+            foreach ($pricesRange as $price) {
+                $lowEnd=$price->getLowValue();
+                $highEnd=$price->getHighValue();
+                $correctPrice=$price->getPricing();
 
-                    if ($lowEnd <= $age && $age <= $highEnd){
-                        $element->setPriceTag($correctPrice);
-                        $this->entityManager->persist($element);
-                    }
+                if ($lowEnd <= $age && $age <= $highEnd) {
+                    $element->setPriceTag($correctPrice);
+                    $this->entityManager->persist($element);
                 }
             }
-        
+        }
     }
 
     public function setFullPrice(Command $order)
     {
         $list=$order->getTicketsOrdered();
         $totalPrice=0;
-        foreach($list as $element)
-            {
-                $totalPrice+=$element->getPriceTag();
-            }
+        foreach ($list as $element) {
+            $totalPrice+=$element->getPriceTag();
+        }
         $order->setTotalPrice($totalPrice);
     }
 }
-?>

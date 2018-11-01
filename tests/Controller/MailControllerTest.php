@@ -1,38 +1,55 @@
 <?php
 namespace App\Tests\Controller;
+
 use App\Controller\PagesController;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Entity\Tickets;
 use App\Entity\Command;
+use App\Repository\TicketsRepository;
+use App\Repository\CommandRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Mailer\Mailer;
+
 
 
 class testSendMailTickets extends WebTestCase
 {
-
     public function testMailSent()
     {
         $mockOrder=new Command;
         $mockTicket=new Tickets;
 
+        $mockTicket=new Tickets;
+        $mockTicket->setVisitorDoB(new \Datetime('05/23/2014'));
+        $mockTicket->setReducedPrice(false);
+
         $mockOrder->addTicketsOrdered($mockTicket);
-        $mockOrder->setId(5);
+        $mockOrder->setId(2140);
         $mockOrder->setVisitorEmail('sylvain.duval29@hotmail.fr');
 
-        $client = $client=static::createClient();
+        $client = static::createClient(array('http://localhost:8000/', 8000));
         $client->followRedirects();
-
         $client->enableProfiler();
 
-        $crawler = $client->request('POST', '/fr/mail_order');
+        $session=$client->getContainer()->get('session');
+        $session->set('orderToken', $mockOrder->getId());
+        $session->start();
+        $session->save();
 
+        $crawler = $client->request('POST', '/fr/mail_order/');
+        
         $mailCollector=$client->getProfile()->getCollector('swiftmailer');
 
         $this->assertSame(1, $mailCollector->getMessageCount());
 
-        $collectedMessages=$mailCollector->getMessages('default_mailer');
-        $message=$mailCollector->getMessageCount('default_mailer');
+        $collectedMessages=$mailCollector->getMessages();
+        $message=$mailCollector->getMessageCount();
         $message=$collectedMessages[0];
 
 
@@ -42,4 +59,3 @@ class testSendMailTickets extends WebTestCase
         $this->assertSame('sylvain.duval29@hotmail.fr', key($message->getTo()));
     }
 }
-?>

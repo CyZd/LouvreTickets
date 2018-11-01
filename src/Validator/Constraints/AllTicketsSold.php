@@ -1,6 +1,5 @@
-<?php    
+<?php
 namespace App\Validator\Constraints;
-
 
 use Symfony\Component\Validator\Constraint;
 
@@ -15,9 +14,4 @@ class AllTicketsSold extends Constraint
     {
         return self::CLASS_CONSTRAINT;
     }
-
 }
-
-
-
-?>

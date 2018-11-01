@@ -15,10 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CommandType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('ticketsOrdered', CollectionType::class, array(
             'label'=> false,
             'allow_add'=>true,
@@ -35,8 +33,6 @@ class CommandType extends AbstractType
         ->add('Save', SubmitType::class, array(
             'label'=>'Commander'
         ));
-        
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -44,10 +40,5 @@ class CommandType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Command::class,
         ));
-        
     }
-    
 }
-
-
-?>

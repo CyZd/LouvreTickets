@@ -20,6 +20,4 @@ class MigrationVersions
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $version;
-
-
 }

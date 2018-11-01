@@ -44,7 +44,10 @@ class TicketType extends AbstractType
                     )),
                 'format' => 'ddMMMMyyyy',
                 'label' =>'Date de visite souhaitée',
-                'years'=>range(date('Y'),2028)
+                'years'=>range(date('Y'), 2028),
+                'widget'=>'single_text',
+                'html5'=>false,
+                'attr'=>['class'=>'js-datepicker']
             ))
             ->add('DayType', ChoiceType::class, [
                 'choices'=> array(
@@ -56,7 +59,10 @@ class TicketType extends AbstractType
             ->add('VisitorDoB', BirthdayType::class, array(
                 'format'=> 'ddMMMMyyyy',
                 'label'=> 'Date de naissance',
-                'help'=>'Connaitre votre âge nous permet d\'ajuster nos tarifs.'
+                'help'=>'Connaitre votre âge nous permet d\'ajuster nos tarifs.',
+                'widget'=>'single_text',
+                'html5'=>false,
+                'attr'=>['class'=>'js-datepicker-birth']
             ))
             ->add('ReducedPrice', CheckboxType::class, array(
                 'required'=>false,
@@ -64,10 +70,9 @@ class TicketType extends AbstractType
                 'help'=>'La réduction s\'applique sur présentation en caisse d\'un justificatif.',
                 'translation_domain'=> null
             ));
-            // ->add('Save', SubmitType::class, array(
+        // ->add('Save', SubmitType::class, array(
             //     'label'=>'Commander'
             // ));
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -77,4 +82,3 @@ class TicketType extends AbstractType
         ));
     }
 }
-?>

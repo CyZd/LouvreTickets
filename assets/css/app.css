@@ -7,9 +7,11 @@ html {
 }
 
 body {
-    padding-top: 105px;
+    padding-top: 54px;
     padding-bottom: 85px;
     height: 100%;
+    padding-left: 10em;
+    padding-right: 10em;
 }
 
 .full-screen{
@@ -23,6 +25,10 @@ body {
     padding-left: 15px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.ticket-top{
+  padding-top:60px;
 }
 
 main{
@@ -127,7 +133,8 @@ a {
 
 /**purchase page adjustments**/
 #back-first-page{
-  margin: 50px;
+  margin: 10px;
+  margin-bottom: 50px;
 }
 
     /* CUSTOMIZE THE CAROUSEL
@@ -368,11 +375,23 @@ a.btn-card {
 
     button.navbar-toggler {
     float: right!important;
+    margin-left: 27em;
     }
 
     button.navbar-toggler.collapsed{
     float: right!important;
     }
 
+}
 
+@media (max-width:500px){
+      button.navbar-toggler {
+    margin-left: 17em;
+    }
+}
+
+@media (max-width:450px){
+      button.navbar-toggler {
+    margin-left: 11em;
+    }
 }

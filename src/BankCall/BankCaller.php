@@ -1,6 +1,6 @@
-<?
+<?php
 // scr/BankCall/BankCaller
-namespace App\BankCall; 
+namespace App\BankCall;
 
 use Stripe\Stripe;
 
@@ -12,16 +12,14 @@ class BankCaller
     {
         \Stripe\Stripe::setApiKey("sk_test_UyY88AsxgBLXgp0sWFsZm8gn");
 
-        try{
+        try {
             $charge=\Stripe\Charge::create([
             'amount'=> $totalPrice*100,
             'currency'=>'eur',
             'source'=>'tok_visa'
             ]);
             $this->setSuccess();
-        } 
-        catch(\Stripe\Error\Card $e)
-        {
+        } catch (\Stripe\Error\Card $e) {
             $this->setFailure();
         }
     }
@@ -41,4 +39,3 @@ class BankCaller
         $this->isSuccess=0;
     }
 }
-?>

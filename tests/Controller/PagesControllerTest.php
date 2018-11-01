@@ -27,12 +27,9 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-
-
-
 class PagesControllerTest extends WebTestCase
 {
-//routes and token test
+    //routes and token test
     public function testIndex()
     {
         $client = static::createClient(array('http://localhost/', 8000));
@@ -48,7 +45,7 @@ class PagesControllerTest extends WebTestCase
         $client->request('GET', '/fr/');
         $sessionData=$session->all();
         $testString='orderToken';
-        $this->assertTrue(array_key_exists($testString,$sessionData));
+        $this->assertTrue(array_key_exists($testString, $sessionData));
     }
 
     public function testForm()
@@ -65,7 +62,7 @@ class PagesControllerTest extends WebTestCase
         $this->assertEquals(404, $client->getResponse()->getStatusCode());
     }
 
-//secondary functions test with mock repo-warning-mock repo is empty
+    //secondary functions test with mock repo-warning-mock repo is empty
     public function testRecapOrder()
     {
         $order=new Command();
@@ -92,8 +89,7 @@ class PagesControllerTest extends WebTestCase
         $sessionData=$session->all();
 
         $this->assertEquals($orderId, $testId);
-        $this->assertTrue(in_array($orderId,$sessionData));
-
+        $this->assertTrue(in_array($orderId, $sessionData));
     }
 
     public function testExecutePayment()
@@ -130,8 +126,7 @@ class PagesControllerTest extends WebTestCase
 
         $list=$order->getTicketsOrdered();
         $price=0;
-        foreach($list as $element)
-        {
+        foreach ($list as $element) {
             $price+=$element->getPriceTag();
         }
 
@@ -163,7 +158,7 @@ class PagesControllerTest extends WebTestCase
             ->willReturn($categoriesRepo);
 
         $ticketChild=new Tickets;
-        $ticketChild->setVisitorDoB(new \Datetime('05/23/2014'));
+        $ticketChild->setVisitorDoB(new \Datetime('05/23/2000'));
         $ticketChild->setReducedPrice(false);
 
         $order=new Command();
@@ -179,13 +174,6 @@ class PagesControllerTest extends WebTestCase
 
 
 
-        $this->assertEquals(10, $result);
-
+        $this->assertEquals(15, $result);
     }
-    
-
-    
-
 }
-
-?>

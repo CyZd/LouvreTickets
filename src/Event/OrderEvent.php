@@ -27,4 +27,3 @@ class OrderEvent extends Event
         return $this;
     }
 }
-?>

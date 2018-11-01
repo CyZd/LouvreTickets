@@ -17,11 +17,8 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
-
 class CommandTypeTest extends TypeTestCase
-{    
-
+{
     private $validator;
     //form test
     public function testCommandType()
@@ -45,10 +42,9 @@ class CommandTypeTest extends TypeTestCase
         $view=$form->createView();
         $children=$view->children;
 
-        foreach(array_keys($datas) as $key){
+        foreach (array_keys($datas) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
-
     }
 
     protected function getExtensions()
@@ -65,7 +61,4 @@ class CommandTypeTest extends TypeTestCase
             new ValidatorExtension($this->validator),
         );
     }
-
-    
 }
-?>

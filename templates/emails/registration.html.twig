@@ -6,24 +6,25 @@
 <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 
 <div class="alert alert-dark" role="alert">
-Courrier envoyé à {{ command.VisitorEmail }}
-<p>Votre achat se compose des éléments suivants:</p>
+{% trans %}Courrier envoyé à{% endtrans %} {{ command.VisitorEmail }}
+<p>{% trans %}Votre achat se compose des éléments suivants:{% endtrans %}</p>
 </div>
 
     {% for ticket in command.ticketsOrdered %}
 <div class="container">
     <div class="row justify-content-md-center">
     <div class="col-8">
+                {% if ticket.DayType == 1 %}<img class="backimage" src="dayfull.jpg" style="background 50% repeat-x;">{% else %}<img class="backimage" src="{{ absolute_url(asset('build/dayhalf.jpg'))}}" style="background 50% repeat-x;">{% endif %}
                     <div class="card text-dark bg-warning mb-3">
-                        <p class="card-header">Numéro du ticket: {{ command.Name }}-{{ ticket.id }}</p>
+                        <p class="card-header">{% trans %}Numéro du ticket:{% endtrans %} {{ command.Name }}-{{ ticket.id }}</p>
                             <div class="card-body">
-                                <div class="card-title">Nom de l'acheteur: {{ ticket.VisitorSurName }}</div>
+                                <div class="card-title">{% trans %}Nom de l'acheteur:{% endtrans %} {{ ticket.VisitorSurName }}</div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Prénom de l'acheteur: {{ ticket.VisitorName}}</li>
-                                    <li class="list-group-item">Date de visite souhaitée: {{ ticket.DesiredDate|date("d/m/Y") }}</li>
-                                    <li class="list-group-item">Date d'achat: {{ ticket.Date|date("d/m/Y") }}</li>
-                                    <li class="list-group-item">Type de journée: {% if ticket.DayType == 1 %} Journée entière {% else %} Demie-journée {% endif %}</li>
-                                    <li class="blockquote-footer"><h3>Prix: {{ ticket.PriceTag }} euros<h3></li>
+                                    <li class="list-group-item">{% trans %}Prénom de l'acheteur:{% endtrans %} {{ ticket.VisitorName}}</li>
+                                    <li class="list-group-item">{% trans %}Date de visite souhaitée:{% endtrans %} {{ ticket.DesiredDate|date("d/m/Y") }}</li>
+                                    <li class="list-group-item">{% trans %}Date d'achat:{% endtrans %} {{ ticket.Date|date("d/m/Y") }}</li>
+                                    <li class="list-group-item">{% trans %}Type de journée:{% endtrans %} {% if ticket.DayType == 1 %} {% trans %}Journée entière{% endtrans %} {% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
+                                    <li class="blockquote-footer"><h3>{% trans %}Prix:{% endtrans %} {{ ticket.PriceTag }} euros<h3></li>
                                 </ul>
                         </div>
                     </div>

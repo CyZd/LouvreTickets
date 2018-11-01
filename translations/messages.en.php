@@ -38,6 +38,17 @@ return array(
     'Commander' => 'Purchase',
     'Ajouter un billet'=>'Add a ticket',
     'Supprimer ce billet'=>'Remove this ticket',
-    'Switch to English'=>'Site en français'
+    'Switch to English'=>'Site en français',
+    'Souhaitez-vous poursuivre?'=>'Do, you wish to proceed?',
+    'Oui, je souhaite payer ma commande'=>'Yes, I finalize my order',
+    'Entrez votre numéro de CB'=>'Enter your credit card number',
+    'Payer'=>'Purchase',
+    'Non, je souhaite modifier ma commande'=>'No, I would like to change my order',
+    'Retour au formulaire'=>'Try again',
+    'Attention:'=>'Carefull:',
+    'Le musée est fermé le mardi, le dimanche et les jours fériés.'=> 'The museum is closed on Tuesdays, Sundays and feast days.',
+    'La demi-journée ne permet de rentrer qu\'à partir de 14h'=>'The half-day option only grants you access from 2pm.',
+    'Courrier envoyé à'=>'Mail sent to',
+    'Votre achat se compose des éléments suivants:'=>'You have purchased the following items',
 );
 ?>

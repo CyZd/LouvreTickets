@@ -1,6 +1,5 @@
-<?php    
+<?php
 namespace App\Validator\Constraints;
-
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -12,7 +11,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
 class AllTicketsSoldValidator extends ConstraintValidator
-{   
+{
     private $repository;
 
     public function __construct(EntityManagerInterface $manager)
@@ -27,15 +26,10 @@ class AllTicketsSoldValidator extends ConstraintValidator
         $alreadySold=$this->repository->findAllForOneDate($date);
         dump(count($alreadySold));
 
-        if(count($alreadySold)>= 1000)
-        {
+        if (count($alreadySold)>= 1000) {
             $this->context->buildViolation($constraint->message)
             ->atPath('DesiredDate')
             ->addViolation();
         }
     }
 }
-
-
-
-?>

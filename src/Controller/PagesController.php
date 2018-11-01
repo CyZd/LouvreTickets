@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\TicketType;
 use App\Form\CommandType;
-use App\BankCall\BankCaller; 
+use App\BankCall\BankCaller;
 
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -34,6 +34,7 @@ use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PagesController extends Controller
 {
@@ -43,7 +44,7 @@ class PagesController extends Controller
     public function index(Environment $twig, SessionInterface $session)
     {
         $sessionEvent=new SessionEvent($session);
-        $currentSession=$this->get('event_dispatcher')->dispatch(SessionEvent::SESSION,$sessionEvent)->getSession();
+        $currentSession=$this->get('event_dispatcher')->dispatch(SessionEvent::SESSION, $sessionEvent)->getSession();
         return new Response($twig->render('welcomePage.html.twig'));
     }
 
@@ -52,30 +53,27 @@ class PagesController extends Controller
      */
     public function formBuildTest(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager)
     {
-        
         $ticket=new Tickets;
         $order=new Command;
         
         $order->addTicketsOrdered($ticket);
 
-        $form=$this->createForm(CommandType::class,$order);
+        $form=$this->createForm(CommandType::class, $order);
 
-        if($request->isMethod('POST'))
-        {
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid())
-            {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $purchaseStart=$form->getData();
                 //create and dispatch order
                 $orderEvent=new OrderEvent($order);
-                $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::REGISTER,$orderEvent)->getOrder();
+                $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::REGISTER, $orderEvent)->getOrder();
 
                 $entityManager->persist($order);
                 $entityManager->flush();
 
                 $orderId=$order->getId();
-                $session->set('orderToken',$orderId);
+                $session->set('orderToken', $orderId);
 
                 $list=$currentOrder->getTicketsOrdered();
 
@@ -83,7 +81,6 @@ class PagesController extends Controller
             }
         }
         return $this->render('formTest.html.twig', array('form'=>$form->createView()));
-
     }
 
     /**
@@ -92,31 +89,25 @@ class PagesController extends Controller
     public function executePayment(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager, BankCaller $caller, Mailer $mailer)
     {
         $orderId=$session->get('orderToken');
-        if($orderId==null)
-        {
+        if ($orderId==null) {
             throw $this->createNotFoundException('La page que vous cherchez n\'existe pas.');
         }
 
         $currentOrder=$entityManager->getRepository(Command::class)->find($orderId);
 
-        if ($currentOrder==null)
-        {
+        if ($currentOrder==null) {
             throw new \RuntimeException('Pas de commande trouvée');
-        }
-        else{
+        } else {
             $orderEvent=new OrderEvent($currentOrder);
-            $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::GOTOPAYMENT,$orderEvent)->getOrder();
+            $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::GOTOPAYMENT, $orderEvent)->getOrder();
         }
 
         $caller->sendPayment($currentOrder->getTotalPrice());
         
-        if($caller->paymentSuccess()==1)
-        {
-            $this->sendMail($entityManager,$mailer,$session);
+        if ($caller->paymentSuccess()==1) {
+            $this->sendMail($entityManager, $mailer, $session);
             return $this->render('paymentMade.html.twig', array('order'=>$currentOrder, 'ticket'=>$currentOrder->getTicketsOrdered()));
-        }
-        else
-        {
+        } else {
             // $entityManager=$this->getDoctrine()->getManager();
             // $orderRepo=$entityManager->getRepository(Command::class);
             // $ticketSRepo=$entityManager->getRepository(Tickets::class);
@@ -130,17 +121,20 @@ class PagesController extends Controller
             // $entityManager->remove($currentOrder);
             // $entityManager->remove($tickets);
 
-            return $this->render('paymentFail.html.twig');   
-        }     
+            return $this->render('paymentFail.html.twig');
+        }
     }
 
     /**
      * @Route("/{_locale}/mail_order/", name="mail_order")
      */
-    public function sendMail(EntityManagerInterface $entityManager, Mailer $mailer,SessionInterface $session)
+    public function sendMail(EntityManagerInterface $entityManager, Mailer $mailer, SessionInterface $session)
     {
         $orderId=$session->get('orderToken');
         $currentOrder=$entityManager->getRepository(Command::class)->find($orderId);
+        if ($currentOrder==null) {
+            throw $this->createNotFoundException('La page que vous cherchez n\'existe pas.');
+        }
         $mailer->sendMailTickets($currentOrder);
     }
 
@@ -150,11 +144,7 @@ class PagesController extends Controller
      */
     public function paymentList(EntityManagerInterface $entityManager)
     {
-        $entityManager->getRepository(Tickets::class);
-        $ticketList=$ticketsRepo->findAll();
+        $ticketList=$entityManager->getRepository(Tickets::class)->findAll();
         return $this->render('paymentList.html.twig', array('ticketList'=>$ticketList));
     }
-
-
-
 }

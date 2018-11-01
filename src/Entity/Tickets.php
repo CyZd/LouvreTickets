@@ -14,7 +14,7 @@ class Tickets
     public function __construct()
     {
         $this->Date=new \DateTime();
-        $this->setDate(New \DateTime('now'));
+        $this->setDate(new \DateTime('now'));
     }
     
     /**
@@ -141,18 +141,6 @@ class Tickets
         return $this;
     }
 
-    public function getByerNumber(): ?int
-    {
-        return $this->ByerNumber;
-    }
-
-    public function setByerNumber(?int $ByerNumber): self
-    {
-        $this->ByerNumber = $ByerNumber;
-
-        return $this;
-    }
-
     public function getDesiredDate(): ?\DateTimeInterface
     {
         return $this->DesiredDate;
@@ -211,8 +199,7 @@ class Tickets
         $ticketDate=$this->getDesiredDate()->format('Y-m-d');
         $currentHour= date('H');
 
-        if($givenDate==1 && $currentHour>='14' && $ticketDate==(new \DateTime('NOW'))->format('Y-m-d'))
-        {
+        if ($givenDate==1 && $currentHour>='14' && $ticketDate==(new \DateTime('NOW'))->format('Y-m-d')) {
             $context->buildViolation('Vous ne pouvez pas commander de billet pleine journée après 14h.')
                 ->atPath('DayType')
                 ->addViolation();
@@ -222,7 +209,7 @@ class Tickets
     public function isSunday(ExecutionContextInterface $context)
     {
         $ticketDate=$this->getDesiredDate()->format('D');
-        if($ticketDate=='Sun'){
+        if ($ticketDate=='Sun') {
             $context->buildViolation('Vous ne pouvez pas commander de billet pour le dimanche.')
                 ->atPath('DesiredDate')
                 ->addViolation();
@@ -233,12 +220,11 @@ class Tickets
     {
         $desiredDate=$this->getDesiredDate()->format('Y-m-d');
         $yearOfVisit=$this->getDesiredDate()->format('Y');
-        $feastDays= Yasumi::create('France',$yearOfVisit);
-        $feastDaysOfYear=$feastDays->between(new \Datetime('01-01-'.$yearOfVisit),new \Datetime('31-12-'.$yearOfVisit));
+        $feastDays= Yasumi::create('France', $yearOfVisit);
+        $feastDaysOfYear=$feastDays->between(new \Datetime('01-01-'.$yearOfVisit), new \Datetime('31-12-'.$yearOfVisit));
 
-        foreach ($feastDaysOfYear as $day){
-            if ($desiredDate == $day)
-            {
+        foreach ($feastDaysOfYear as $day) {
+            if ($desiredDate == $day) {
                 $context->buildViolation('La date que vous avez choisi est un jour férié.')
                 ->atPath('DesiredDate')
                 ->addViolation();
@@ -259,6 +245,4 @@ class Tickets
 
         return $this;
     }
-
-    
 }
