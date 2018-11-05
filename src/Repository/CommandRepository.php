@@ -34,6 +34,20 @@ class CommandRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Command[] Returns an array of Tickets objects
+     */
+    public function findAllForOneDate(\DateTimeInterface $desiredDate)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.DesiredDate = :DesiredDate')
+            ->setParameter('DesiredDate', $desiredDate)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function removeCommand($id)
     {
         $qb=$this->createQueryBuilder('c')

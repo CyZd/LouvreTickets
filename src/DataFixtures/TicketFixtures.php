@@ -15,16 +15,16 @@ class TicketFixtures extends Fixture
             $command=new Command();
             $command->setName('test');
             $command->setVisitorEmail('JJFictif@fictif.fr');
+            $command->setDesiredDate(new \DateTime('06-02-2019'));
+            $command->setDate(new \DateTime('03-09-2018'));
 
             $ticket=new Tickets();
-            $ticket->setDate(new \Datetime('03-09-2018'));
-            $ticket->setDayType(1);
+            $ticket->setDate(new \DateTime('03-09-2018'));
             $ticket->setPriceTag(16);
             $ticket->setVisitorName('Jean-Jacques');
             $ticket->setVisitorSurName('Fictif');
-            $ticket->setDesiredDate(new \Datetime('06-02-2019'));
             $ticket->setVisitorCountry('FR');
-            $ticket->setVisitorDoB(new \Datetime('21-06-1983'));
+            $ticket->setVisitorDoB(new \DateTime('21-06-1983'));
             $ticket->setReducedPrice(0);
             $ticket->setCommand($command);
 

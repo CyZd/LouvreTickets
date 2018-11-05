@@ -382,16 +382,55 @@ a.btn-card {
     float: right!important;
     }
 
+    body {
+      padding-top: 54px;
+      padding-bottom: 85px;
+      height: 100%;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+  }
+
 }
 
 @media (max-width:500px){
       button.navbar-toggler {
     margin-left: 17em;
     }
+
+    body {
+      padding-top: 54px;
+      padding-bottom: 85px;
+      height: 100%;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+  }
 }
 
 @media (max-width:450px){
       button.navbar-toggler {
     margin-left: 11em;
     }
+
+    body {
+      padding-top: 54px;
+      padding-bottom: 85px;
+      height: 100%;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+  }
 }

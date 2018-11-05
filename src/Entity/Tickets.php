@@ -30,16 +30,6 @@ class Tickets
     private $Date;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $DesiredDate;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $DayType;
-
-    /**
      * @ORM\Column(type="smallint")
      */
     private $PriceTag;
@@ -81,30 +71,6 @@ class Tickets
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->Date;
-    }
-
-    public function setDate(\DateTimeInterface $Date): self
-    {
-        $this->Date = $Date;
-
-        return $this;
-    }
-
-    public function getDayType(): ?int
-    {
-        return $this->DayType;
-    }
-
-    public function setDayType(int $DayType): self
-    {
-        $this->DayType = $DayType;
-
-        return $this;
-    }
-
     public function getPriceTag(): ?string
     {
         return $this->PriceTag;
@@ -113,6 +79,18 @@ class Tickets
     public function setPriceTag(float $PriceTag): self
     {
         $this->PriceTag = $PriceTag;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->Date;
+    }
+
+    public function setDate(\DateTimeInterface $Date): self
+    {
+        $this->Date = $Date;
 
         return $this;
     }
@@ -141,18 +119,6 @@ class Tickets
         return $this;
     }
 
-    public function getDesiredDate(): ?\DateTimeInterface
-    {
-        return $this->DesiredDate;
-    }
-
-    public function setDesiredDate(\DateTimeInterface $DesiredDate): self
-    {
-        $this->DesiredDate = $DesiredDate;
-
-        return $this;
-    }
-
     public function getVisitorCountry(): ?string
     {
         return $this->VisitorCountry;
@@ -177,8 +143,6 @@ class Tickets
         return $this;
     }
 
-
-
     public function getReducedPrice(): ?bool
     {
         return $this->reducedPrice;
@@ -190,49 +154,6 @@ class Tickets
 
         return $this;
     }
-
-    
-
-    public function checkHalfDay(ExecutionContextInterface $context)
-    {
-        $givenDate=$this->getDayType();
-        $ticketDate=$this->getDesiredDate()->format('Y-m-d');
-        $currentHour= date('H');
-
-        if ($givenDate==1 && $currentHour>='14' && $ticketDate==(new \DateTime('NOW'))->format('Y-m-d')) {
-            $context->buildViolation('Vous ne pouvez pas commander de billet pleine journée après 14h.')
-                ->atPath('DayType')
-                ->addViolation();
-        }
-    }
-
-    public function isSunday(ExecutionContextInterface $context)
-    {
-        $ticketDate=$this->getDesiredDate()->format('D');
-        if ($ticketDate=='Sun') {
-            $context->buildViolation('Vous ne pouvez pas commander de billet pour le dimanche.')
-                ->atPath('DesiredDate')
-                ->addViolation();
-        }
-    }
-
-    public function isFeastDay(ExecutionContextInterface $context)
-    {
-        $desiredDate=$this->getDesiredDate()->format('Y-m-d');
-        $yearOfVisit=$this->getDesiredDate()->format('Y');
-        $feastDays= Yasumi::create('France', $yearOfVisit);
-        $feastDaysOfYear=$feastDays->between(new \Datetime('01-01-'.$yearOfVisit), new \Datetime('31-12-'.$yearOfVisit));
-
-        foreach ($feastDaysOfYear as $day) {
-            if ($desiredDate == $day) {
-                $context->buildViolation('La date que vous avez choisi est un jour férié.')
-                ->atPath('DesiredDate')
-                ->addViolation();
-            }
-        }
-    }
-
-
 
     public function getCommand(): ?Command
     {

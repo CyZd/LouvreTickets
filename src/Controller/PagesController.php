@@ -61,8 +61,8 @@ class PagesController extends Controller
         $form=$this->createForm(CommandType::class, $order);
 
         if ($request->isMethod('POST')) {
+            
             $form->handleRequest($request);
-
             if ($form->isSubmitted() && $form->isValid()) {
                 $purchaseStart=$form->getData();
                 //create and dispatch order
@@ -77,7 +77,7 @@ class PagesController extends Controller
 
                 $list=$currentOrder->getTicketsOrdered();
 
-                return $this->render('orderRecap.html.twig', array('ticket'=>$list));
+                return $this->render('orderRecap.html.twig', array('order'=>$currentOrder,'ticket'=>$list));
             }
         }
         return $this->render('formTest.html.twig', array('form'=>$form->createView()));
@@ -106,21 +106,10 @@ class PagesController extends Controller
         
         if ($caller->paymentSuccess()==1) {
             $this->sendMail($entityManager, $mailer, $session);
+            $currentOrder->setHasBeenPaid(true);
             return $this->render('paymentMade.html.twig', array('order'=>$currentOrder, 'ticket'=>$currentOrder->getTicketsOrdered()));
         } else {
-            // $entityManager=$this->getDoctrine()->getManager();
-            // $orderRepo=$entityManager->getRepository(Command::class);
-            // $ticketSRepo=$entityManager->getRepository(Tickets::class);
-            // $orderId=$session->get('orderToken');
-
-            // $currentOrder=$orderRepo->find($orderId);
-
-            
-            // $tickets=$entityManager->findBy(array('commandId'=>$currentOrder->getId()));
-
-            // $entityManager->remove($currentOrder);
-            // $entityManager->remove($tickets);
-
+            $currentOrder->setHasBeenPaid(false);
             return $this->render('paymentFail.html.twig');
         }
     }

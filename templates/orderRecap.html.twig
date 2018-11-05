@@ -16,9 +16,9 @@
                   <ul class="list-group list-group-flush">
                       <li class="list-group-item">{% trans %}Nom de l'acheteur:{% endtrans %} {{ tickets.VisitorSurName }}</li>
                       <li class="list-group-item">{% trans %}Prénom de l'acheteur:{% endtrans %} {{ tickets.VisitorName}}</li>
-                      <li class="list-group-item">{% trans %}Date de visite souhaitée:{% endtrans %} {{ tickets.DesiredDate|date("d/m/Y") }}</li>
+                      <li class="list-group-item">{% trans %}Date de visite souhaitée:{% endtrans %} {{ order.DesiredDate|date("d/m/Y") }}</li>
                       <li class="list-group-item">{% trans %}Date d'achat:{% endtrans %} {{ tickets.Date|date("d/m/Y") }}</li>
-                      <li class="list-group-item">{% trans %}Type de journée:{% endtrans %} {% if tickets.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
+                      <li class="list-group-item">{% trans %}Type de journée:{% endtrans %} {% if order.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
                       <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
                   </ul>
                   {% set fullPrice = fullPrice + tickets.PriceTag %}

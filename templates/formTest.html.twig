@@ -28,12 +28,6 @@
                         <div class="form-group col-sm-6">
                             {{ form_row(form['VisitorDoB']) }}
                         </div>
-                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}Le musée est fermé le mardi, le dimanche et les jours fériés.{% endtrans %}">
-                            {{ form_row(form['DesiredDate']) }}
-                        </div>
-                        <div class="form-group col-md-6" data-toggle="popover" data-placement="right" data-trigger="focus" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}La demi-journée ne permet de rentrer qu'à partir de 14h{% endtrans %}">
-                            {{ form_row(form['DayType']) }}
-                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-check">
@@ -60,6 +54,12 @@
                     {{ form_widget (form) }}       
                 {% endfor %}
             </div>
+        </div>
+        <div class="form-group col-md-6" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}Le musée est fermé le mardi, le dimanche et les jours fériés.{% endtrans %}">
+            {{ form_row(form['DesiredDate']) }}
+        </div>
+        <div class="form-group col-md-6" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}La demi-journée ne permet de rentrer qu'à partir de 14h{% endtrans %}">
+            {{ form_row(form['DayType']) }}
         </div>
  {{ form_end(form) }}
 <div class="row justify-content-md-center">
@@ -154,9 +154,12 @@ function addDeleteForm($form){
     <script>
     $(document).ready(function(){
         $('.js-datepicker').datepicker({
-            format:'yyyy-mm-dd',
+            format:'dd-mm-yyyy',
             todayBtn: 'linked',
             language:'fr',
+            yearRange: "-0:+1",
+            changeMonth: true,
+            changeYear: true,
             daysOfWeekDisabled: "0,2",
             todayHighlight: true,
             startDate: new Date(),
@@ -168,9 +171,12 @@ function addDeleteForm($form){
 <script>
     $(document).ready(function(){
         $('.js-datepicker').datepicker({
-            format:'yyyy-mm-dd',
+            format:'dd-mm-yyyy',
             todayBtn: 'linked',
             language:'en',
+            yearRange: "-0:+1",
+            changeMonth: true,
+            changeYear: true,
             daysOfWeekDisabled: "0,2",
             todayHighlight: true,
             startDate: new Date(),
@@ -184,6 +190,10 @@ function addDeleteForm($form){
     <script>
     $(document).ready(function(){
         $('.js-datepicker-birth').datepicker({
+            format:'dd-mm-yyyy',
+            yearRange: "-0:+1",
+            changeMonth: true,
+            changeYear: true,
             startView: 3,
             language:'fr',
             autoclose: true
@@ -194,6 +204,10 @@ function addDeleteForm($form){
 <script>
     $(document).ready(function(){
         $('.js-datepicker-birth').datepicker({
+            format:'dd-mm-yyyy',
+            yearRange: "-0:+1",
+            changeMonth: true,
+            changeYear: true,
             startView: 3,
             language:'en',
             autoclose: true

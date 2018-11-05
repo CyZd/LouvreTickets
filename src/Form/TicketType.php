@@ -37,27 +37,8 @@ class TicketType extends AbstractType
             ->add('VisitorCountry', CountryType::class, array(
                 'label'=> 'Pays d\'origine'
             ))
-            ->add('DesiredDate', DateType::class, array(
-                    'constraints' => new GreaterThanOrEqual(array(
-                    'value'=>'today',
-                    'message'=>'Vous ne pouvez pas commander pour une date passée.',
-                    )),
-                'format' => 'ddMMMMyyyy',
-                'label' =>'Date de visite souhaitée',
-                'years'=>range(date('Y'), 2028),
-                'widget'=>'single_text',
-                'html5'=>false,
-                'attr'=>['class'=>'js-datepicker']
-            ))
-            ->add('DayType', ChoiceType::class, [
-                'choices'=> array(
-                    'Journée pleine' => 1,
-                    'Demie-journée' => 0,
-                ),
-                'label'=>'Durée de la visite'
-            ])
             ->add('VisitorDoB', BirthdayType::class, array(
-                'format'=> 'ddMMMMyyyy',
+                'format'=> 'dd-MM-yyyy',
                 'label'=> 'Date de naissance',
                 'help'=>'Connaitre votre âge nous permet d\'ajuster nos tarifs.',
                 'widget'=>'single_text',

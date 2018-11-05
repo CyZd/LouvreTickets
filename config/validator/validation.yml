@@ -1,5 +1,5 @@
 # config/validator/validation.yaml
-App\Entity\Tickets:
+App\Entity\Command:
     properties:
         DesiredDate:
             - GreaterThanOrEqual: today

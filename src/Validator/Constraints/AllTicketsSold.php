@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class AllTicketsSold extends Constraint
 {
-    public $message="Tout les billets pour ce jour ont déjà été vendus.";
+    public $message="Tout les billets pour ce jour ont déjà été vendus.--All tickets for this day have been sold.";
 
     public function getTargets()
     {

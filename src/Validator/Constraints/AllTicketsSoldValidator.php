@@ -6,7 +6,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-use App\Entity\Tickets;
+use App\Entity\Command;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -16,12 +16,12 @@ class AllTicketsSoldValidator extends ConstraintValidator
 
     public function __construct(EntityManagerInterface $manager)
     {
-        $this->repository=$manager->getRepository(Tickets::class);
+        $this->repository=$manager->getRepository(Command::class);
     }
 
-    public function validate($ticket, Constraint $constraint)
+    public function validate($order, Constraint $constraint)
     {
-        $date=$ticket->getDesiredDate();
+        $date=$order->getDesiredDate();
 
         $alreadySold=$this->repository->findAllForOneDate($date);
         dump(count($alreadySold));
