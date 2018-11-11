@@ -7,9 +7,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Yasumi\Yasumi;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TicketsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */
-class Tickets
+class Ticket
 {
     public function __construct()
     {

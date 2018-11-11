@@ -107,6 +107,19 @@ a {
     color: whitesmoke;
 }
 
+.col-12>.card{
+  margin-top:60px;
+}
+
+#result{
+  margin-top:60px;
+}
+
+.btn{
+  opacity: 0.8;
+  color: white;
+}
+
 
 /*Navbar custom**/
 

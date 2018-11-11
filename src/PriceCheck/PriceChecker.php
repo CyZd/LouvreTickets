@@ -5,22 +5,26 @@ namespace App\PriceCheck;
 
 use Doctrine\ORM\EntityManagerInterface;
 // use Doctrine\Common\Persistence\ObjectManager;
+use App\Entity\Category;
 use App\Entity\Tickets;
 use App\Entity\Command;
 use App\Entity\Categories;
+use App\Repository\CategoryRepository;
 
 class PriceChecker
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository)
     {
         $this->entityManager=$entityManager;
+        $this->categoryRpository=$categoryRepository;
     }
 
     public function checkPrices(Command $order)
     {
         $currentDate=date('Y');
+        $pricesRange=$this->entityManager->getRepository(Category::class)->findAll();
 
         $ticketList=$order->getTicketsOrdered();
         foreach ($ticketList as $element) {
@@ -31,7 +35,6 @@ class PriceChecker
                 $age=200;
             }
 
-            $pricesRange=$this->entityManager->getRepository(Categories::class)->findAll();
             foreach ($pricesRange as $price) {
                 $lowEnd=$price->getLowValue();
                 $highEnd=$price->getHighValue();

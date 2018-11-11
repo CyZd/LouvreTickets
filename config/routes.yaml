@@ -1,6 +1,12 @@
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction  
+    defaults:
+        path: /fr
+
 index:
     path: /{_locale}/
-    controller: App\Controller\PagesController::index
+    controller: App\Controller\CommandController::index
     requirements:
         _locale: en|fr
 
@@ -8,28 +14,28 @@ index:
 formTest:
     path:
         /{_locale}/formtest/
-    controller: App\Controller\PagesController::formBuildTest
+    controller: App\Controller\CommandController::formBuildTest
     requirements:
         _locale: en|fr
 
 exec_payment:
     path:
         /{_locale}/executePayment/
-    controller: App\Controller\PagesController::executePayment
+    controller: App\Controller\CommandController::executePayment
     requirements:
         _locale: en|fr
 
 payment_list:
     path:
         /{_locale}/payment_list/
-    controller: App\Controller\PagesController::paymentList
+    controller: App\Controller\CommandController::paymentList
     requirements:
         _locale: en|fr
 
 mail_order:
     path:
         /{_locale}/mail_order/
-    controller: App\Controller\PagesController::sendMail
+    controller: App\Controller\CommandController::sendMail
     requirements:
         _locale: en|fr
 

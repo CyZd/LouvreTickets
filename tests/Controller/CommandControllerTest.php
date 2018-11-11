@@ -27,7 +27,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
 
-class PagesControllerTest extends WebTestCase
+class CommandControllerTest extends WebTestCase
 {
     //routes and token test
     public function testIndex()
@@ -170,9 +170,6 @@ class PagesControllerTest extends WebTestCase
         $priceCheck->setFullPrice($order);
 
         $result=$order->getTotalPrice();
-
-
-
 
         $this->assertEquals(15, $result);
     }

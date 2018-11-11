@@ -5,16 +5,20 @@
 
 <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 
+
 <div class="alert alert-dark" role="alert">
+<img src="https://botw-pd.s3.amazonaws.com/styles/logo-thumbnail/s3/0025/4471/brand.gif?itok=ZVXgJK6R" class="img-thumbnail float-left" height="42" width="42">
+<center>
 {% trans %}Courrier envoyé à{% endtrans %} {{ command.VisitorEmail }}
 <p>{% trans %}Votre achat se compose des éléments suivants:{% endtrans %}</p>
+</center>
 </div>
 
     {% for ticket in command.ticketsOrdered %}
 <div class="container">
     <div class="row justify-content-md-center">
     <div class="col-8">
-                {% if command.DayType == 1 %}<img class="backimage" src="dayfull.jpg" style="background 50% repeat-x;">{% else %}<img class="backimage" src="{{ absolute_url(asset('build/dayhalf.jpg'))}}" style="background 50% repeat-x;">{% endif %}
+
                     <div class="card text-dark bg-warning mb-3">
                         <p class="card-header">{% trans %}Numéro du ticket:{% endtrans %} {{ command.Name }}-{{ ticket.id }}</p>
                             <div class="card-body">

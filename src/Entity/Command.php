@@ -39,7 +39,7 @@ class Command
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tickets", mappedBy="Command", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="Command", cascade={"persist"})
      */
     private $ticketsOrdered;
 
@@ -138,14 +138,14 @@ class Command
     }
 
     /**
-     * @return Collection|Tickets[]
+     * @return Collection|Ticket[]
      */
     public function getTicketsOrdered(): Collection
     {
         return $this->ticketsOrdered;
     }
 
-    public function addTicketsOrdered(Tickets $ticketsOrdered): self
+    public function addTicketsOrdered(Ticket $ticketsOrdered): self
     {
         if (!$this->ticketsOrdered->contains($ticketsOrdered)) {
             $this->ticketsOrdered[] = $ticketsOrdered;
@@ -155,7 +155,7 @@ class Command
         return $this;
     }
 
-    public function removeTicketsOrdered(Tickets $ticketsOrdered): self
+    public function removeTicketsOrdered(Ticket $ticketsOrdered): self
     {
         if ($this->ticketsOrdered->contains($ticketsOrdered)) {
             $this->ticketsOrdered->removeElement($ticketsOrdered);

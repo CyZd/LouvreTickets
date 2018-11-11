@@ -4,9 +4,9 @@ namespace App\Mailer;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Tickets;
+use App\Entity\Ticket;
 use App\Entity\Command;
-use App\Entity\Categories;
+use App\Entity\Category;
 
 class Mailer
 {
@@ -38,6 +38,7 @@ class Mailer
             ),
             'text/html'
         );
+
         $this->mailer->send($message);
     }
 }

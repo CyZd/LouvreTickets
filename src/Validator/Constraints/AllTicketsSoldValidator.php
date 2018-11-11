@@ -24,7 +24,6 @@ class AllTicketsSoldValidator extends ConstraintValidator
         $date=$order->getDesiredDate();
 
         $alreadySold=$this->repository->findAllForOneDate($date);
-        dump(count($alreadySold));
 
         if (count($alreadySold)>= 1000) {
             $this->context->buildViolation($constraint->message)

@@ -10,7 +10,7 @@ return array(
     'Afficher/Masquer ce billet'=>'Show/Hide the ticket',
     'Vous pouvez commander plusieurs billets à l\'aide du bouton "Ajouter un billet".'=>'You can order multiple tickets by clicking the "Add a ticket" Button.',
     'Retour à l\'accueil'=>'Back to main page',
-    'Merci, votre commande a bien été enregistrée!'=>'Thank you, your pruchase is confirmed!',
+    'Merci, votre commande a bien été enregistrée!'=>'Thank you, your purchase is confirmed!',
     'Un e-mail de confirmation a été envoyée à l\'adresse'=>'A confirmation E-mail has been sent to the following adress: ',
     'Récapitulatif de votre commande'=>'Order summary',
     'Nom de l\'acheteur:'=>'Buyer\'s name',

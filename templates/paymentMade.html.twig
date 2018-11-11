@@ -1,35 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h3>{% trans %}Merci, votre commande a bien été enregistrée!{% endtrans %}</h3>
+<h3 id="result">{% trans %}Merci, votre commande a bien été enregistrée!{% endtrans %}</h3>
 
-<p>{% trans %}Un e-mail de confirmation a été envoyée à l'adresse {% endtrans %}{{ order.VisitorEmail }}</p>
+<p>{% trans %}Un e-mail de confirmation a été envoyée à l'adresse:{% endtrans %}{{ order.VisitorEmail }}</p>
 
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
-                <h4>{% trans %}Récapitulatif de votre commande{% endtrans %}</h4>
-        </div>
-                    {% set fullPrice = 0 %}
-            <div="card-body">
-                    {% for tickets in ticket %}
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">{% trans %}Nom de l'acheteur: {% endtrans %}{{ tickets.VisitorSurName }}</li>
-                            <li class="list-group-item">{% trans %}Prénom de l'acheteur: {% endtrans %}{{ tickets.VisitorName}}</li>
-                            <li class="list-group-item">{% trans %}Date de visite souhaitée: {% endtrans %}{{ order.DesiredDate|date("d/m/Y") }}</li>
-                            <li class="list-group-item">{% trans %}Date d'achat: {% endtrans %}{{ tickets.Date|date("d/m/Y") }}</li>
-                            <li class="list-group-item">{% trans %}Type de journée: {% endtrans %}{% if order.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
-                            <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
-                        </ul>
-                        {% set fullPrice = fullPrice + tickets.PriceTag %}
-                    {% endfor %}
+            <div class="card-header">
+                    <h4>{% trans %}Récapitulatif de votre commande{% endtrans %}</h4>
+                     <img class="rounded mx-auto d-block" src="{% if order.DayType == 1 %} {{ asset('build/static/dayfull.jpg') }} {% else %} {{ asset('build/static/dayhalf.jpg') }} {% endif %}" alt="Card image">
             </div>
+                        {% set fullPrice = 0 %}
+                <div="card-body">
+                        {% for tickets in ticket %}
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{% trans %}Nom de l'acheteur: {% endtrans %}{{ tickets.VisitorSurName }}</li>
+                                <li class="list-group-item">{% trans %}Prénom de l'acheteur: {% endtrans %}{{ tickets.VisitorName}}</li>
+                                <li class="list-group-item">{% trans %}Date de visite souhaitée: {% endtrans %}{{ order.DesiredDate|date("d/m/Y") }}</li>
+                                <li class="list-group-item">{% trans %}Date d'achat: {% endtrans %}{{ tickets.Date|date("d/m/Y") }}</li>
+                                <li class="list-group-item">{% trans %}Type de journée: {% endtrans %}{% if order.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
+                                <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
+                            </ul>
+                            {% set fullPrice = fullPrice + tickets.PriceTag %}
+                        {% endfor %}
+                </div>
                     <h4>{% trans %}Le coût total de votre achat est de:{% endtrans %}</h4>
                     <h4 class="text-center">{{ fullPrice }} euros.</h4>
-            </div>
 
+        </div>
             <div class="row justify-content-md-center">
                 <div class="col-6">
                     <a href="{{path('index')}}" class="btn btn-dark" role="button">{% trans %}Retour à l'accueil{% endtrans %}</a>
