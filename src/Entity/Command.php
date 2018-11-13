@@ -209,8 +209,8 @@ class Command
     public function isSunday(ExecutionContextInterface $context)
     {
         $orderDate=$this->getDesiredDate()->format('D');
-        if ($orderDate=='Sun') {
-            $context->buildViolation('Vous ne pouvez pas commander de billet pour le dimanche.')
+        if ($orderDate=='Sun' || $orderDate == 'Tue') {
+            $context->buildViolation('Vous ne pouvez pas commander de billet pour mardi ou le dimanche.')
                 ->atPath('DesiredDate')
                 ->addViolation();
         }

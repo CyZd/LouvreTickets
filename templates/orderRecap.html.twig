@@ -42,7 +42,7 @@
         <div class="card card-body">
                 
 
-                <form action={% if app.request.getLocale() == 'fr' %} "/fr/executePayment/" {% else %} "/en/executePayment/" {% endif %} method="post" id="payment-form">
+                <form action={% if app.request.getLocale() == 'fr' %} "/fr/payment/" {% else %} "/en/payment/" {% endif %} method="post" id="payment-form">
                 <div class="form-row">
                     <label for="card-element">
                     {% trans %}Entrez votre numéro de CB{% endtrans %}
@@ -55,7 +55,7 @@
                 </form>
         </div>
     </div>
-    <a href={% if app.request.getLocale() == 'fr' %} "/fr/formtest/" {% else %} "/en/formtest/" {% endif %} class="btn btn-dark btn-block" role="button">{% trans %}Non, je souhaite modifier ma commande{% endtrans %}</a>
+    <a href={% if app.request.getLocale() == 'fr' %} "/fr/commander/" {% else %} "/en/commander/" {% endif %} class="btn btn-dark btn-block" role="button">{% trans %}Non, je souhaite modifier ma commande{% endtrans %}</a>
   </div>
 </div>
 

@@ -13,14 +13,14 @@ index:
 
 formTest:
     path:
-        /{_locale}/formtest/
+        /{_locale}/commander/
     controller: App\Controller\CommandController::formBuildTest
     requirements:
         _locale: en|fr
 
 exec_payment:
     path:
-        /{_locale}/executePayment/
+        /{_locale}/payment/
     controller: App\Controller\CommandController::executePayment
     requirements:
         _locale: en|fr
