@@ -2,6 +2,8 @@
 <html>
     
     <head>
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('build/static/icon.jpg') }}" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <link rel="stylesheet" href="{{ asset('build/app.css') }}">
@@ -36,7 +38,7 @@
                         <div class="container">
                             <div class="navbar-header">
 
-                                <a class="navbar-brand text-white" href="{{path('index')}}">Louvre.fr</a>
+                                <a class="navbar-brand text-white" href="{{path('index')}}"><img src="{{ asset('build/static/icon.jpg') }}" width="30" height="30" class="d-inline-block align-top" alt=""> Louvre.fr</a>
 
                                 <button class="navbar-toggler" type="button" style="float: right" data-toggle="collapse" data-target="#targetContent" aria-controls="targetContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                             </div>
