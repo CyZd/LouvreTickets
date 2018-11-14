@@ -13,14 +13,18 @@
               {% set fullPrice = 0 %}
         <div="card-body">
               {% for tickets in ticket %}
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item">{% trans %}Nom de l'acheteur:{% endtrans %} {{ tickets.VisitorSurName }}</li>
-                      <li class="list-group-item">{% trans %}Prénom de l'acheteur:{% endtrans %} {{ tickets.VisitorName}}</li>
-                      <li class="list-group-item">{% trans %}Date de visite souhaitée:{% endtrans %} {{ order.DesiredDate|date("d/m/Y") }}</li>
-                      <li class="list-group-item">{% trans %}Date d'achat:{% endtrans %} {{ tickets.Date|date("d/m/Y") }}</li>
-                      <li class="list-group-item">{% trans %}Type de journée:{% endtrans %} {% if order.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
-                      <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
-                  </ul>
+              <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans %}Nom de l'acheteur:{% endtrans %} {{ tickets.VisitorSurName }}</h5>
+                    <h6 class="card-title">{% trans %}Prénom de l'acheteur:{% endtrans %} {{ tickets.VisitorName}}</h6>
+                      <ul class="list-group list-group-flush">
+                          <li class="list-group-item">{% trans %}Date de visite souhaitée:{% endtrans %} {{ order.DesiredDate|date("d/m/Y") }}</li>
+                          <li class="list-group-item">{% trans %}Date d'achat:{% endtrans %} {{ tickets.Date|date("d/m/Y") }}</li>
+                          <li class="list-group-item">{% trans %}Type de journée:{% endtrans %} {% if order.DayType == 1 %} {% trans %}Journée entière {% endtrans %}{% else %} {% trans %}Demie-journée{% endtrans %} {% endif %}</li>
+                          <li class="list-group-item">{% trans %}Prix: {% endtrans %}{{ tickets.PriceTag }} euros</li>
+                      </ul>
+                    </div>
+                  </div>
                   {% set fullPrice = fullPrice + tickets.PriceTag %}
               {% endfor %}
         </div>
@@ -55,7 +59,7 @@
                 </form>
         </div>
     </div>
-    <a href={% if app.request.getLocale() == 'fr' %} "/fr/commander/" {% else %} "/en/commander/" {% endif %} class="btn btn-dark btn-block" role="button">{% trans %}Non, je souhaite modifier ma commande{% endtrans %}</a>
+    <a href={% if app.request.getLocale() == 'fr' %} "/fr/commander/" {% else %} "/en/commander/" {% endif %} class="btn btn-dark btn-block" role="button" id="recapback">{% trans %}Non, je souhaite modifier ma commande{% endtrans %}</a>
   </div>
 </div>
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Ticket;
 use App\Entity\Command;
 use App\Entity\Category;
@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\TicketType;
 use App\Form\CommandType;
 use App\BankCall\BankCaller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 // use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -38,22 +39,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 // use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class CommandController extends Controller
+class CommandController extends AbstractController
 {
     /**
      * @Route("/{_locale}/", name="index")
      */
-    public function index(Environment $twig, SessionInterface $session)
+    public function index(Environment $twig, SessionInterface $session, EventDispatcherInterface $dispatcher)
     {
         $sessionEvent=new SessionEvent($session);
-        $currentSession=$this->get('event_dispatcher')->dispatch(SessionEvent::SESSION, $sessionEvent)->getSession();
+        $currentSession=$dispatcher->dispatch(SessionEvent::SESSION, $sessionEvent)->getSession();
         return new Response($twig->render('welcomePage.html.twig'));
     }
 
     /**
      * @Route("/{_locale}/formtest/", name="formTest")
      */
-    public function formBuildTest(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager)
+    public function formBuildTest(Request $request, Environment $twig, SessionInterface $session, EntityManagerInterface $entityManager, EventDispatcherInterface $dispatcher)
     {
         $ticket=new Ticket;
         $order=new Command;
@@ -69,7 +70,7 @@ class CommandController extends Controller
                 $purchaseStart=$form->getData();
                 //create and dispatch order
                 $orderEvent=new OrderEvent($order);
-                $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::REGISTER, $orderEvent)->getOrder();
+                $currentOrder=$dispatcher->dispatch(OrderEvent::REGISTER, $orderEvent)->getOrder();
 
                 $entityManager->persist($order);
                 $entityManager->flush();
@@ -87,7 +88,7 @@ class CommandController extends Controller
     /**
      * @Route("/{_locale}/executePayment/", name="exec_payment")
      */
-    public function executePayment(SessionInterface $session, EntityManagerInterface $entityManager, CommandRepository $commandRepository, BankCaller $caller, Mailer $mailer)
+    public function executePayment(SessionInterface $session, EntityManagerInterface $entityManager, CommandRepository $commandRepository, BankCaller $caller, Mailer $mailer, EventDispatcherInterface $dispatcher)
     {
         $orderId=$session->get('orderToken');
         if ($orderId==null) {
@@ -101,7 +102,7 @@ class CommandController extends Controller
         } 
 
         $orderEvent=new OrderEvent($currentOrder);
-        $currentOrder=$this->get('event_dispatcher')->dispatch(OrderEvent::GOTOPAYMENT, $orderEvent)->getOrder();
+        $currentOrder=$dispatcher->dispatch(OrderEvent::GOTOPAYMENT, $orderEvent)->getOrder();
 
 
         $caller->sendPayment($currentOrder->getTotalPrice());
@@ -138,4 +139,5 @@ class CommandController extends Controller
         $ticketList=$ticketRepository->findAll();
         return $this->render('paymentList.html.twig', array('ticketList'=>$ticketList));
     }
+    
 }
