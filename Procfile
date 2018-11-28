@@ -1,1 +1,1 @@
-web: $(composer config bin-dir)/heroku-php-apache2 public/ -F fpm_custom.conf
+web: $(composer config bin-dir)/heroku-php-apache2 public/ 
