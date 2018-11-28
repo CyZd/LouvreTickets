@@ -27,7 +27,7 @@ class TicketFixtures extends Fixture
             $ticket->setVisitorSurName('Fictif');
             $ticket->setVisitorCountry('FR');
             $ticket->setVisitorDoB(new \DateTime('21-06-1983'));
-            $ticket->setReducedPrice(0);
+            $ticket->setReducedPrice(false);
             $ticket->setCommand($command);
 
             $manager->persist($command);

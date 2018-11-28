@@ -20,7 +20,7 @@ class TicketRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Tickets[] Returns an array of Tickets objects
+     * @return Ticket[] Returns an array of Tickets objects
      */
     public function findAllForOneDate(\DateTimeInterface $desiredDate)
     {

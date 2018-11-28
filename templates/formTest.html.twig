@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-check">
+                        <div class="form-check" id="ReducedPrice">
                             {{ form_row(form['ReducedPrice']) }}
                         </div>
                     </div>
@@ -54,10 +54,10 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="form-group col-md-6" data-toggle="popover" container: 'body' data-trigger="focus" data-html="true" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}Le musée est fermé le mardi, le dimanche et les jours fériés.{% endtrans %}">
+        <div class="form-group col-md-6" id="CloseDays" data-toggle="popover" container: 'body' data-trigger="focus" data-html="true" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}Le musée est fermé le mardi, le dimanche et les jours fériés.{% endtrans %}">
             {{ form_row(form['DesiredDate']) }}
         </div>
-        <div class="form-group col-md-6" data-toggle="popover" container: 'body' data-trigger="focus" data-html="true" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}La demi-journée ne permet de rentrer qu'à partir de 14h{% endtrans %}">
+        <div class="form-group col-md-6" id="HalfDay" data-toggle="popover" container: 'body' data-trigger="focus" data-html="true" title="{% trans %}Attention:{% endtrans %}" data-content="{% trans %}La demi-journée ne permet de rentrer qu'à partir de 14h{% endtrans %}">
             {{ form_row(form['DayType']) }}
         </div>
  {{ form_end(form) }}
@@ -214,5 +214,13 @@ function addDeleteForm($form){
     });
     </script>
 {% endif %}
+
+<script>
+    $(document).ready(function(){
+        $('#CloseDays').on('click'.function(e){
+            console.log("works");
+        })
+    })
+</script>
 
 {% endblock %}

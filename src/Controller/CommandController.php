@@ -92,13 +92,13 @@ class CommandController extends AbstractController
     {
         $orderId=$session->get('orderToken');
         if ($orderId==null) {
-            throw $this->createNotFoundException('La page que vous cherchez n\'existe pas.');
+            throw $this->createNotFoundException('La page que vous cherchez n\'existe pas. Such page doesn\'t exist.');
         }
 
         $currentOrder=$entityManager->getRepository(Command::class)->find($orderId);
 
         if ($currentOrder==null) {
-            throw new \RuntimeException('Pas de commande trouvée');
+            throw $this->createNotFoundException('Il  n\'existe pas de commande correspondante. There\'s no such order recorded.');
         } 
 
         $orderEvent=new OrderEvent($currentOrder);

@@ -2,8 +2,6 @@
 
 {% block body %}
 
-
-
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -52,36 +50,6 @@
         </a>
       </div>
 
-
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-{# 
-      <div class="container marketing" id="second-page-part">
-
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-          <div class="col-lg-4">
-            <img class="rounded-circle" src="{{ asset('build/static/round-one.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Infos1</h2>
-            <p>Texte info</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Plus d'infos &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="rounded-circle" src="{{ asset('build/static/round-two.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Infos2</h2>
-            <p>Texte.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Plus d'infos &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="rounded-circle" src="{{ asset('build/static/round-three.jpg') }}" alt="Generic placeholder image" width="140" height="140">
-            <h2>Infos2</h2>
-            <p>Texte</p>
-            <p><a class="btn btn-secondary" href="#" role="button">Plus d'infos &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-        </div><!-- /.row --> #}
-
-        <!-- details card section starts from here -->
 <section class="details-card">
     <div class="container">
         <div class="row">
@@ -168,6 +136,11 @@ $(window).on('resize', function (){
   $wHeight = $(window).height();
   $item.height($wHeight);
 });
+</script>
+
+<script type="text/javascript" id="cookieinfo"
+	src="//cookieinfoscript.com/js/cookieinfo.min.js"
+  data-message={% trans %}"Ce site utlise des cookies pour vous offrir une meilleure qualité de service."{% endtrans %}>
 </script>
 
 

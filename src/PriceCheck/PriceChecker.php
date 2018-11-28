@@ -18,7 +18,7 @@ class PriceChecker
     public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository)
     {
         $this->entityManager=$entityManager;
-        $this->categoryRpository=$categoryRepository;
+        $this->categoryRepository=$categoryRepository;
     }
 
     public function checkPrices(Command $order)

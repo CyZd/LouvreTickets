@@ -50,5 +50,7 @@ return array(
     'La demi-journée ne permet de rentrer qu\'à partir de 14h'=>'The half-day option only grants you access from 2pm.',
     'Courrier envoyé à'=>'Mail sent to',
     'Votre achat se compose des éléments suivants:'=>'You have purchased the following items',
+    'Ce site utlise des cookies pour vous offrir une meilleure qualité de service.'=>'This website uses cookies to give you a better user experience.',
+    'J\'ai compris'=>'Understood'
 );
 ?>

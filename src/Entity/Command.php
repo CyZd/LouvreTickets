@@ -18,7 +18,7 @@ class Command
         $this->Date=new \DateTime();
         $this->setDate(new \DateTime('now'));
         $this->ticketsOrdered = new ArrayCollection();
-        $this->setName(uniqid(rand()));
+        $this->setName(strval(uniqid(rand())));
         $this->setHasBeenPaid(false);
     }
     /**
