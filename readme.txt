@@ -9,29 +9,30 @@ You'll find in the "DB" folder a copy of the testing database on .sql format. Im
 
 In config/packages/doctrine.yaml, in the parameters section, replace the env(DTATABASE_URL) value with your own database access values, following this pattern: "mysql://USERNAME:PASSWORD@IPADRESS:PORT/DB NAME" .
 
-The database contains several tables required for the project to work. Fixtures are not fully complete, don't use them, it would break the work-logic. 
+The database contains several tables required for the project to work. Fixtures are complete. You'll need them if you don't use the test DB, otherwise the site logic won't work.
 
 With this preparation, the website should work locally by typing "localhost" on your browser once your php server and DB manager are up and running. 
 
-/Copiez le contenu du dossier sur votre machine. Vous trouverez un dossier "DB" qui contient une copie de la base de donnée de test. Importez ce fichier en utlisant votre gestionnaire de DB. 
+/Copiez le contenu du dossier sur votre machine. Vous trouverez un dossier "DB" qui contient une copie de la base de donnÃ©e de test. Importez ce fichier en utlisant votre gestionnaire de DB. 
 
-Dans config/packages/doctrine.yaml, section "parameters", remplacez la valeur de la ligne env(DTATABASE_URL) par vos propres données, suivant le shéma "mysql://NOMUTILSATEURS:MOTDEPASSE@ADRESSEIP:PORT/NOM DE LA BASE".
+Dans config/packages/doctrine.yaml, section "parameters", remplacez la valeur de la ligne env(DTATABASE_URL) par vos propres donnÃ©es, suivant le shÃ©ma "mysql://NOMUTILSATEURS:MOTDEPASSE@ADRESSEIP:PORT/NOM DE LA BASE".
 
-La base de données contient plusieurs tables nécessaires au bon fonctionnement du site. Les fixtures ne sont pas complètes, ne vous en servez pas, elle briseraient la logique métier.
+La base de donnÃ©es contient plusieurs tables nÃ©cessaires au bon fonctionnement du site. Les fixtures sonnt complÃ¨tes, vous en aurez besqoin si vous n'utilisez pas la base de test, car elles contiennent la logique mÃ©tier. 
 
-Avec ces préparations, le site devrait fonctionner une fois votre serveur php et gestionnaire de DB lancés. 
+Avec ces prÃ©parations, le site devrait fonctionner une fois votre serveur php et gestionnaire de DB lancÃ©s. 
 
 Testing:
 
 Run PHP unit in the folder root (typing "./bin/phpunit tests/ --debug") to launch the test suite. 
-The controller is tested in unit and functionnal aspects (currently one test failing). 
-The mailer is tested on a functionnal basis (works but the test is currently not operational).
+The controller is tested in unit and functionnal aspects. 
+The mailer is tested on a functionnal basis.
 The form builder is tested in unit and functionnal aspects.
+If you run a test with Php-stan, remeber to exclude the migration folder.
 
-/Lancez PHP unit dans le dossier racine (en tapant "./bin/phpunit tests/ --debug") pour lancer la série de tests.
-Le controlleur est testé sur des aspects unitaire et fonctionnels (Actuellement un test en échec).
-La classe gérant l'envoi de mail est testé fonctionnellement (la classe fonctionne mais le test échoue).
-Le constructeur de formulaire est testé sur des aspects unitaire et fonctionnels. 
-
+/Lancez PHP unit dans le dossier racine (en tapant "./bin/phpunit tests/ --debug") pour lancer la sÃ©rie de tests.
+Le controlleur est testÃ© sur des aspects unitaire et fonctionnels.
+La classe gÃ©rant l'envoi de mail est testÃ© fonctionnellement.
+Le constructeur de formulaire est testÃ© sur des aspects unitaire et fonctionnels. 
+Si vous lancez des tests avec Php stan, n'oubliez pas d'exclure les dossiers comme les migrations. 
 
 
