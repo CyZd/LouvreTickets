@@ -6,18 +6,20 @@ Getting Started/Pour commencer:
 
 Copy the folder content on your drive. 
 You'll find in the "DB" folder a copy of the testing database on .sql format. Import this file using your DB manager.
+Don't forget a composer update if needed.
 
 In config/packages/doctrine.yaml, in the parameters section, replace the env(DTATABASE_URL) value with your own database access values, following this pattern: "mysql://USERNAME:PASSWORD@IPADRESS:PORT/DB NAME" .
 
-The database contains several tables required for the project to work. Fixtures are complete. You'll need them if you don't use the test DB, otherwise the site logic won't work.
+The database contains several tables required for the project to work. Fixtures are complete. You'll only need them if you don't use the test DB, otherwise the site logic won't work.
 
 With this preparation, the website should work locally by typing "localhost" on your browser once your php server and DB manager are up and running. 
 
 /Copiez le contenu du dossier sur votre machine. Vous trouverez un dossier "DB" qui contient une copie de la base de donnée de test. Importez ce fichier en utlisant votre gestionnaire de DB. 
+N'oubliez pas l'update de composer si besoin. 
 
 Dans config/packages/doctrine.yaml, section "parameters", remplacez la valeur de la ligne env(DTATABASE_URL) par vos propres données, suivant le shéma "mysql://NOMUTILSATEURS:MOTDEPASSE@ADRESSEIP:PORT/NOM DE LA BASE".
 
-La base de données contient plusieurs tables nécessaires au bon fonctionnement du site. Les fixtures sonnt complètes, vous en aurez besqoin si vous n'utilisez pas la base de test, car elles contiennent la logique métier. 
+La base de données contient plusieurs tables nécessaires au bon fonctionnement du site. Les fixtures sont complètes, vous n'en aurez besoin que si vous n'utilisez pas la base de test, car elles contiennent la logique métier. 
 
 Avec ces préparations, le site devrait fonctionner une fois votre serveur php et gestionnaire de DB lancés. 
 
