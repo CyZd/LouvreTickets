@@ -25,7 +25,7 @@ La base de données contient plusieurs tables nécessaires au bon fonctionnement
 
 Avec ces préparations, le site devrait fonctionner une fois votre serveur php et gestionnaire de DB lancés. 
 
-Attention: les assets (images) fournis le sont à titre d'exemples illustratifs au titre de l'usage privée accordé à des fins éducatives, et ne sont pas libres de droit. 
+Attention: les assets (images) fournis sont employés en tant qu'exemple au titre de l'usage privée accordé à des fins éducatives, et ne sont pas libres de droit. 
 
 Testing:
 
