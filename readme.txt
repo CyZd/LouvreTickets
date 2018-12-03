@@ -14,6 +14,8 @@ The database contains several tables required for the project to work. Fixtures 
 
 With this preparation, the website should work locally by typing "localhost" on your browser once your php server and DB manager are up and running. 
 
+Caution: assets included are for private use (under the fair use laws governing educations purposes) and subject to copyright from their righful owners. 
+
 /Copiez le contenu du dossier sur votre machine. Vous trouverez un dossier "DB" qui contient une copie de la base de donnée de test. Importez ce fichier en utlisant votre gestionnaire de DB. 
 N'oubliez pas l'update de composer si besoin. 
 
@@ -22,6 +24,8 @@ Dans config/packages/doctrine.yaml, section "parameters", remplacez la valeur de
 La base de données contient plusieurs tables nécessaires au bon fonctionnement du site. Les fixtures sont complètes, vous n'en aurez besoin que si vous n'utilisez pas la base de test, car elles contiennent la logique métier. 
 
 Avec ces préparations, le site devrait fonctionner une fois votre serveur php et gestionnaire de DB lancés. 
+
+Attention: les assets (images) fournis le sont à titre d'exemples illustratifs au titre de l'usage privée accordé à des fins éducatives, et ne sont pas libres de droit. 
 
 Testing:
 
